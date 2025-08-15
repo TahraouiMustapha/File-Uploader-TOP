@@ -7,7 +7,7 @@
         <%-include('partials/header')%>
 
         <div>
-            <form action="" method="post">
+            <form method="post">
                 <h2>Sign Up</h2>
                 <p>
                     Already have an account ? <a href="/log-in">Log in</a>
@@ -15,7 +15,7 @@
 
                 <p>
                     <label for="username">Uersname*</label>
-                    <input type="email" id="username" name="username" required>
+                    <input type="email" id="username" name="username">
                 </p>
 
                 <p>
@@ -27,6 +27,10 @@
                     <label for="confirmPassword">Confirm Password*</label>
                     <input type="password" id="confirmPassword" name="confirmPassword">
                 </p>
+
+                <%if(locals.errors) {%>
+                    <%-include("partials/errors")%>
+                <%}%>
 
                 <button type="submit">Create Account</button>
             </form>
