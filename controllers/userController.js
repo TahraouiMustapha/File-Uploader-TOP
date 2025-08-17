@@ -51,7 +51,6 @@ const signUp = [
         const { username, password } = req.body;
         const hashedPassword = await bcrypt.hash(password, 10)
         
-        console.log(username, password, hashedPassword)
         await prisma.createUser(username, hashedPassword)
 
         res.redirect("/")
