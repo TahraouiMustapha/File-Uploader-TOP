@@ -11,8 +11,26 @@ async function createUser(username, password) {
     })
 }
 
+async function getUserById(id) {
+    return await prisma.user.findUnique({
+        where: {
+            userid: id
+        }
+    })
+}
+
+async function getUserByUsername(username) {
+    return await prisma.user.findUnique({
+        where: {
+            username: username
+        }
+    })
+}
+
 
 
 module.exports = {
-    createUser
+    createUser, 
+    getUserById,
+    getUserByUsername  
 }
