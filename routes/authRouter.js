@@ -13,13 +13,25 @@ authRouter.get("/log-in", (req, res)=> res.render("log-in", {
     title: "Log In"
 }))
 
+authRouter.get("/log-out", (req, res, next)=> {
+    req.logout(err => {
+        if(err) {
+            return next(err)
+        }
+        res.redirect("/")
+    })
+})
+
 authRouter.post("/sign-up", userControllers.signUp )
 
-authRouter.post("/log-in", passport.authenticate("local", {
-    successRedirect: "/", 
-    failureRedirect: "/users/log-in", 
-    failureFlash: true, 
-}))
+authRouter.post(
+    "/log-in",
+     passport.authenticate("local", {
+        successRedirect: "/", 
+        failureRedirect: "/users/log-in", 
+        failureFlash: true, 
+    })
+)
 
 
 module.exports = authRouter;

@@ -1,8 +1,12 @@
 <div class="header">
     <a href="#">File Uploader</a>
 
-    <div>
-        <a href="/users/sign-up">Sign up</a>
-        <a href="/users/log-in">Log in</a>
-    </div>
+    <%if(locals.user) {%>
+        <a href="/users/log-out">Log out</a>
+    <%} else {%>       
+        <div>
+            <a href="/users/sign-up">Sign up</a>
+            <a href="/users/log-in">Log in</a>
+        </div>
+    <%}%>
 </div>

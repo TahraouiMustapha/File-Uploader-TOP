@@ -14,7 +14,7 @@ const db = require("./db/queries");
 const bcrypt = require("bcryptjs")
 
 // import routers
-const authRouter = require("./routes/authRouter")
+const authRouter = require("./routes/authRouter");
 
 // views config
 app.set("views", path.join(__dirname, "views"))
@@ -43,9 +43,6 @@ app.use(
 )
 
 app.use(express.urlencoded({ extended: false }));
-
-app.get("/", (req, res)=> res.render("main"))
-app.use("/users", authRouter)
 
 passport.use(
   new LocalStrategy(async (username, password, done) => {
@@ -81,6 +78,25 @@ passport.deserializeUser(async (id, done) => {
     done(err);
   }
 });
+
+app.use(passport.initialize())
+app.use(passport.session())
+
+
+// assign user before all routes 
+app.use((req, res, next)=> {
+  res.locals.user = req.user
+  next();
+})
+
+app.get("/", (req, res) => {
+  res.render("main", {
+    user: req.user
+  })
+})
+
+app.use("/users", authRouter)
+
 
 
 app.use((err, req, res, next)=> {

@@ -21,7 +21,7 @@ const signUpValidate = [
         .trim()
         .notEmpty()
         .withMessage(`Password ${errorMessages.empty}`)
-        .isLength({max:8})
+        .isLength({min:8})
         .withMessage(`Password ${errorMessages.length}`), 
     body("confirmPassword")
         .trim()
@@ -53,7 +53,7 @@ const signUp = [
         
         await prisma.createUser(username, hashedPassword)
 
-        res.redirect("/")
+        res.redirect("/users/log-in")
     })
 ]
 
