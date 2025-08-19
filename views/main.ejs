@@ -7,6 +7,31 @@
         
         <%if (locals.user) {%>
             <h1><%= user.username%></h1>
-        <%}%>            
+            <button id="newFileBtn">New file</button>
+        <%}%>     
+        
+        <!-- uplaod file form -->
+        <dialog>
+            <form action="/files/new-file" method="post" enctype="multipart/form-data">
+                <button type="button" id="exitBtn">X</button>
+                <input type="file" name="new-file">
+                <button type="submit">Upload</button>
+            </form>
+        </dialog>
     </body>
+    <script>
+        const dialog = document.querySelector('dialog');
+        const newFileBtn = document.getElementById('newFileBtn');
+        const exitBtn = document.getElementById('exitBtn')
+
+
+        newFileBtn.addEventListener('click', ()=> {
+            dialog.showModal()
+        })
+
+        exitBtn.addEventListener('click', ()=> {
+            dialog.close()
+        })
+
+    </script>
 </html>

@@ -11,6 +11,7 @@ const app = express()
 
 // import routers
 const authRouter = require("./routes/authRouter");
+const filesRouter = require("./routes/filesRouter");
 
 // views config
 app.set("views", path.join(__dirname, "views"))
@@ -55,6 +56,7 @@ app.get("/", (req, res) => {
 })
 
 app.use("/users", authRouter)
+app.use("/files", filesRouter)
 
 app.use((err, req, res, next)=> {
     if(err.code == 'P2002') {
