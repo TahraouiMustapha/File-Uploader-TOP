@@ -3,15 +3,11 @@ const path = require("path")
 const expressSession = require("express-session")
 const { PrismaSessionStore } = require("@quixo3/prisma-session-store")
 const { PrismaClient } = require('@prisma/client');
-const passport = require("passport")
-const LocalStrategy = require("passport-local").Strategy;
+const passport = require("./auth/passport")
 const flash = require("express-flash")
 require("dotenv").config()
 
 const app = express()
-
-const db = require("./db/queries");
-const bcrypt = require("bcryptjs")
 
 // import routers
 const authRouter = require("./routes/authRouter");
@@ -19,7 +15,6 @@ const authRouter = require("./routes/authRouter");
 // views config
 app.set("views", path.join(__dirname, "views"))
 app.set("view engine", "ejs")
-
 app.use(flash())
 
 // sessions config
@@ -44,44 +39,8 @@ app.use(
 
 app.use(express.urlencoded({ extended: false }));
 
-passport.use(
-  new LocalStrategy(async (username, password, done) => {
-    try {
-      const user = await db.getUserByUsername(username);
-
-      if (!user) {
-        return done(null, false, { message: "Incorrect username" });
-      }
-
-      const match = await bcrypt.compare(password, user.password);
-      if (!match) {
-        return done(null, false, { message: "Incorrect password" });
-      }
-      
-      return done(null, user);
-    } catch(err) {
-      return done(err);
-    }
-  })
-);
-
-passport.serializeUser((user, done) => {
-  done(null, user.userid);
-});
-
-passport.deserializeUser(async (id, done) => {
-  try {
-    const user = await db.getUserById(id)
-
-    done(null, user);
-  } catch(err) {
-    done(err);
-  }
-});
-
 app.use(passport.initialize())
 app.use(passport.session())
-
 
 // assign user before all routes 
 app.use((req, res, next)=> {
@@ -96,8 +55,6 @@ app.get("/", (req, res) => {
 })
 
 app.use("/users", authRouter)
-
-
 
 app.use((err, req, res, next)=> {
     if(err.code == 'P2002') {
