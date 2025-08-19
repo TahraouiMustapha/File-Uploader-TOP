@@ -2,7 +2,8 @@
     <head>
         <title><%=title || "Log In"%></title>
     </head>
-    <body>
+    <body>      
+
         <div>
             <form method="post">
                 <h2>Log in</h2>
@@ -19,7 +20,9 @@
                     <label for="password">Password</label>
                     <input type="password" id="password" name="password">
                 </p>
-
+                <%if(messages.error) {%>
+                    <%-include('partials/errors')%>
+                <%}%>
                 <button type="submit">Log in</button>
 
             </form>
