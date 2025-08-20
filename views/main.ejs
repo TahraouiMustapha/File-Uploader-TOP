@@ -32,7 +32,7 @@
                 <button type="submit">Create Folder</button>
             </form>
         </dialog>
-        
+
     </body>
     <script>
         const newFileBtn = document.getElementById('newFileBtn');
@@ -43,6 +43,7 @@
         const newFolderBtn = document.querySelector('#newFolderBtn');
         const newFolderDialog = document.querySelector('#newFolderDialog');
         const exitNewFolderBtn = document.querySelector('#exitNewFolderBtn')
+        const folderNameInput = document.querySelector('input[name = \"folderName\"]')
 
  
         newFileBtn.addEventListener('click', ()=> {
@@ -58,6 +59,7 @@
         })
 
         exitNewFolderBtn.addEventListener('click', ()=> {
+            folderNameInput.value = ''
             newFolderDialog.close()
         })
 
