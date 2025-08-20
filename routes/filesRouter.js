@@ -9,5 +9,10 @@ filesRouter.post('/new-file', upload.single('new-file'), (req, res)=> {
     res.send("all are good")
 })
 
+filesRouter.post('/new-folder', (req, res)=> {
+    console.log(req.body.folderName)
+    res.send('good')
+})
+
 
 module.exports = filesRouter;

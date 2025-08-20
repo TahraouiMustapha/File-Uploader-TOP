@@ -8,29 +8,57 @@
         <%if (locals.user) {%>
             <h1><%= user.username%></h1>
             <button id="newFileBtn">New file</button>
+            <button id="newFolderBtn">New folder</button>
         <%}%>     
         
         <!-- uplaod file form -->
-        <dialog>
+        <dialog id="newFileDialog">
             <form action="/files/new-file" method="post" enctype="multipart/form-data">
-                <button type="button" id="exitBtn">X</button>
+                <button type="button" id="exitNewFileBtn">X</button>
                 <input type="file" name="new-file">
                 <button type="submit">Upload</button>
             </form>
         </dialog>
+
+        <!-- new folder form -->
+        <dialog id="newFolderDialog">
+            <form action="/files/new-folder" method="post">
+                <button type="button" id="exitNewFolderBtn">X</button>
+                <p>
+                    <label for="folderName">Name</label>
+                    <input type="text" id="folderName" name="folderName">
+                </p>
+
+                <button type="submit">Create Folder</button>
+            </form>
+        </dialog>
+        
     </body>
     <script>
-        const dialog = document.querySelector('dialog');
         const newFileBtn = document.getElementById('newFileBtn');
-        const exitBtn = document.getElementById('exitBtn')
+        const newFileDialog = document.querySelector('#newFileDialog');
+        const exitNewFileBtn = document.getElementById('exitNewFileBtn');
 
 
+        const newFolderBtn = document.querySelector('#newFolderBtn');
+        const newFolderDialog = document.querySelector('#newFolderDialog');
+        const exitNewFolderBtn = document.querySelector('#exitNewFolderBtn')
+
+ 
         newFileBtn.addEventListener('click', ()=> {
-            dialog.showModal()
+            newFileDialog.showModal()
         })
 
-        exitBtn.addEventListener('click', ()=> {
-            dialog.close()
+        newFolderBtn.addEventListener('click', ()=> {
+            newFolderDialog.showModal()
+        })
+
+        exitNewFileBtn.addEventListener('click', ()=> {
+            newFileDialog.close()
+        })
+
+        exitNewFolderBtn.addEventListener('click', ()=> {
+            newFolderDialog.close()
         })
 
     </script>
