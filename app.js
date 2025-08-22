@@ -13,6 +13,8 @@ const app = express()
 const authRouter = require("./routes/authRouter");
 const filesRouter = require("./routes/filesRouter");
 
+const filesController = require("./controllers/filesController")
+
 // views config
 app.set("views", path.join(__dirname, "views"))
 app.set("view engine", "ejs")
@@ -49,11 +51,7 @@ app.use((req, res, next)=> {
   next();
 })
 
-app.get("/", (req, res) => {
-  res.render("main", {
-    user: req.user
-  })
-})
+app.get("/", filesController.mainPage )
 
 app.use("/users", authRouter)
 app.use("/files", filesRouter)

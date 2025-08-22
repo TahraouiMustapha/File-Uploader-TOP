@@ -1,5 +1,21 @@
 const db = require("../db/queries")
 const asyncHandler = require('express-async-handler')
+const { compareAsc } = require("date-fns")
+
+
+const mainPage = asyncHandler (async (req, res)=> {
+    const {user} = req;
+
+    let files = null;
+    if(user) {
+        files = await db.getUserFiles(user.userid)
+        files.sort((a, b)=> compareAsc(a.createdDate, b.createdDate));
+    }
+
+    res.render("main", {
+        userFiles: files  
+    })
+})
 
 const createFolder = asyncHandler( async (req, res) => {
     let { folderName } = req.body;
@@ -15,5 +31,6 @@ const createFolder = asyncHandler( async (req, res) => {
 
 
 module.exports = {
+    mainPage, 
     createFolder
 }

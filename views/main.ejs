@@ -6,9 +6,22 @@
         <%-include('partials/header')%>
         
         <%if (locals.user) {%>
-            <h1><%= user.username%></h1>
             <button id="newFileBtn">New file</button>
             <button id="newFolderBtn">New folder</button>
+
+            <div>
+                <p><%=user.username%></p>
+                <%if(locals.userFiles) {%>
+                    <ul>
+                        <%userFiles.forEach(file => {%>
+                            <li><%= `${file.name}, ${file.size}, ${file.createdDate}` %></li>
+                        <%})%>                            
+                    </ul>
+                <%} else {%>
+                    <p>Create a new folder to get started</p>    
+                <%}%>                    
+            </div>
+
         <%}%>     
         
         <!-- uplaod file form -->
@@ -46,13 +59,17 @@
         const folderNameInput = document.querySelector('input[name = \"folderName\"]')
 
  
-        newFileBtn.addEventListener('click', ()=> {
+        if(newFileBtn){
+            newFileBtn.addEventListener('click', ()=> {
             newFileDialog.showModal()
-        })
+            })
+        }
 
-        newFolderBtn.addEventListener('click', ()=> {
+        if(newFolderBtn){
+            newFolderBtn.addEventListener('click', ()=> {
             newFolderDialog.showModal()
-        })
+            })
+        }
 
         exitNewFileBtn.addEventListener('click', ()=> {
             newFileDialog.close()
