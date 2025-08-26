@@ -12,8 +12,9 @@ const app = express()
 // import routers
 const authRouter = require("./routes/authRouter");
 const filesRouter = require("./routes/filesRouter");
+const folderRouter = require("./routes/foldersRouter");
 
-const filesController = require("./controllers/filesController")
+const foldersController = require("./controllers/foldersController");
 
 // views config
 app.set("views", path.join(__dirname, "views"))
@@ -51,9 +52,10 @@ app.use((req, res, next)=> {
   next();
 })
 
-app.get("/", filesController.mainPage )
+app.get("/", foldersController.mainPage )
 
 app.use("/users", authRouter)
+app.use("/folders", folderRouter)
 app.use("/files", filesRouter)
 
 app.use((err, req, res, next)=> {
