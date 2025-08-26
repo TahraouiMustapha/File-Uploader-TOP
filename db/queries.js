@@ -54,10 +54,23 @@ async function getUserFiles(ownerId) {
     return folders.concat(files);
 }
 
+
+async function getFolderFiles(ownerId, folderId) {
+    return await prisma.folder.findUnique({
+        where: {
+            folderid: folderId
+        }, 
+        include: {
+            children: true
+        }
+    })
+}
+
 module.exports = {
     createUser, 
     getUserById,
     getUserByUsername, 
     createFolder, 
-    getUserFiles 
+    getUserFiles, 
+    getFolderFiles 
 }

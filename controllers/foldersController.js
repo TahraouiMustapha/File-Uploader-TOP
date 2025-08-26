@@ -13,7 +13,7 @@ const mainPage = asyncHandler (async (req, res)=> {
     }
 
     res.render("main", {
-        userFiles: files.length == 0 ? null : files   
+        userFiles: files?.length == 0 ? null : files   
     })
 })
 
@@ -29,15 +29,28 @@ const createFolder = asyncHandler( async (req, res) => {
     res.redirect(req.get('referer') || '/')
 })
 
+
+// folder obj
+// {
+//   folderid: 1,
+//   name: 'new one',
+//   size: null,
+//   createdDate: 2025-08-20T22:03:32.379Z,
+//   userid: 1,
+//   parentid: null,
+//   children: []
+// }
+
 const appearFolderContent = asyncHandler(async (req, res)=> {
     const { userid } = req.user;
     const { folderid } = req.params;
     
-    const folderFiles = await db.getFolderFiles(userid, Number(folderid))
+    const folderObj = await db.getFolderFiles(userid, Number(folderid))
 
-    console.log(folderFiles)
-
-    res.send('hi')
+    res.render("main" , {
+        rootFolder: folderObj, 
+        userFiles: folderObj?.children.length == 0 ? null : folderObj.children
+    })
 })
 
 

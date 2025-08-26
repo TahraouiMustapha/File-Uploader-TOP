@@ -10,41 +10,25 @@
             <button id="newFolderBtn">New folder</button>
 
             <div>
-                <p><%=user.username%></p>
-                <%if(locals.userFiles) {%>
-                    <ul>
-                        <%userFiles.forEach(file => {%>
-                            <li><%= `${file.name}, ${file.size}, ${file.createdDate}` %></li>
-                        <%})%>                            
-                    </ul>
+                <p><%=user.username%>  <%= locals.rootFolder?`> ${rootFolder.name}`: null %></p>
+                <%if(userFiles) {%>
+                    <%-include('partials/folderContent')%>
                 <%} else {%>
-                    <p>Create a new folder to get started</p>    
+                    <%if(locals.rootFolder) { %>
+                        <p>no files or folers to display</p>
+                    <%} else { %>
+                        <p>Create a new folder to get started</p>  
+                    <%}%>  
                 <%}%>                    
             </div>
 
         <%}%>     
         
         <!-- uplaod file form -->
-        <dialog id="newFileDialog">
-            <form action="/files/new-file" method="post" enctype="multipart/form-data">
-                <button type="button" id="exitNewFileBtn">X</button>
-                <input type="file" name="new-file">
-                <button type="submit">Upload</button>
-            </form>
-        </dialog>
+        <%- include('partials/uploadFileForm')%>
 
         <!-- new folder form -->
-        <dialog id="newFolderDialog">
-            <form action="/files/new-folder" method="post">
-                <button type="button" id="exitNewFolderBtn">X</button>
-                <p>
-                    <label for="folderName">Name</label>
-                    <input type="text" id="folderName" name="folderName">
-                </p>
-
-                <button type="submit">Create Folder</button>
-            </form>
-        </dialog>
+        <%-include('partials/newFolderForm')%>
 
     </body>
     <script>
