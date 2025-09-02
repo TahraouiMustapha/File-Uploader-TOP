@@ -1,4 +1,4 @@
-const { PrismaClient } = require("../generated/prisma")
+const { PrismaClient } = require('@prisma/client')
 
 const prisma = new PrismaClient()
 
@@ -82,6 +82,17 @@ async function createNestedFolder(parentFolderId, ownerId, folderName) {
     })
 }
 
+async function createFile(name, size, ownerId, filedata) {
+    await prisma.file.create({
+        data: {
+            name: name, 
+            size: size, 
+            userid: ownerId, 
+            filedata: filedata
+        }
+    })
+}
+
 module.exports = {
     createUser, 
     getUserById,
@@ -89,5 +100,6 @@ module.exports = {
     createFolder, 
     getUserFiles, 
     getFolderFiles, 
-    createNestedFolder 
+    createNestedFolder, 
+    createFile
 }
