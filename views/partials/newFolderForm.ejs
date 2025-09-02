@@ -1,5 +1,5 @@
 <dialog id="newFolderDialog">
-    <form action="/folders/new-folder" method="post">
+    <form action=<%=locals.newFolderHref || '/folders/new-folder'%> method="post">
         <button type="button" id="exitNewFolderBtn">X</button>
         <p>
             <label for="folderName">Name</label>

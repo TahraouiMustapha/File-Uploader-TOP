@@ -7,5 +7,7 @@ folderRouter.post('/new-folder', foldersController.createFolder )
 
 folderRouter.get('/:folderid', foldersController.appearFolderContent )
 
+folderRouter.post('/:folderid/new-folder' , foldersController.createNestedFolder )
+
 
 module.exports = folderRouter

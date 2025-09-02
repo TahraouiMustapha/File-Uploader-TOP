@@ -13,7 +13,8 @@ const mainPage = asyncHandler (async (req, res)=> {
     }
 
     res.render("main", {
-        userFiles: files?.length == 0 ? null : files   
+        userFiles: files?.length == 0 ? null : files , 
+        newFolderHref: '/folders/new-folder' , 
     })
 })
 
@@ -45,17 +46,30 @@ const appearFolderContent = asyncHandler(async (req, res)=> {
     const { userid } = req.user;
     const { folderid } = req.params;
     
-    const folderObj = await db.getFolderFiles(userid, Number(folderid))
+    const folderObj = await db.getFolderFiles(Number(folderid))
+    const href = `/folders/${folderObj.folderid}/new-folder`;
 
     res.render("main" , {
         rootFolder: folderObj, 
-        userFiles: folderObj?.children.length == 0 ? null : folderObj.children
+        userFiles: folderObj?.children.length == 0 ? null : folderObj.children, 
+        newFolderHref: href
     })
+})
+
+const createNestedFolder = asyncHandler(async (req, res)=> {
+    const { folderid } = req.params;
+    const { userid } = req.user;
+    const { folderName } = req.body;
+
+    await db.createNestedFolder(Number(folderid), Number(userid), folderName);
+
+    res.redirect(req.get('referer') || '/')
 })
 
 
 module.exports = {
     mainPage, 
     createFolder, 
-    appearFolderContent
+    appearFolderContent,
+    createNestedFolder
 }

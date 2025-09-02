@@ -15,7 +15,7 @@
                     <%-include('partials/folderContent')%>
                 <%} else {%>
                     <%if(locals.rootFolder) { %>
-                        <p>no files or folers to display</p>
+                        <p>no files or folders to display</p>
                     <%} else { %>
                         <p>Create a new folder to get started</p>  
                     <%}%>  
@@ -25,7 +25,7 @@
         <%}%>     
         
         <!-- uplaod file form -->
-        <%- include('partials/uploadFileForm')%>
+        <%-include('partials/uploadFileForm')%>
 
         <!-- new folder form -->
         <%-include('partials/newFolderForm')%>

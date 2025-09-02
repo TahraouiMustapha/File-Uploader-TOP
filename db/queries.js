@@ -55,7 +55,7 @@ async function getUserFiles(ownerId) {
 }
 
 
-async function getFolderFiles(ownerId, folderId) {
+async function getFolderFiles(folderId) {
     return await prisma.folder.findUnique({
         where: {
             folderid: folderId
@@ -66,11 +66,28 @@ async function getFolderFiles(ownerId, folderId) {
     })
 }
 
+async function createNestedFolder(parentFolderId, ownerId, folderName) {
+    await prisma.folder.update({
+        where : {
+            folderid: parentFolderId
+        } , 
+        data : {
+            children: {
+                create : {
+                    name: folderName, 
+                    userid: ownerId
+                }
+            }
+        }
+    })
+}
+
 module.exports = {
     createUser, 
     getUserById,
     getUserByUsername, 
     createFolder, 
     getUserFiles, 
-    getFolderFiles 
+    getFolderFiles, 
+    createNestedFolder 
 }
