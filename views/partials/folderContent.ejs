@@ -1,9 +1,11 @@
 <ul>
     <%userFiles.forEach(file => {%>
-        <%if( file.folderid ){%>
-            <li><a href=<%=`/folders/${file.folderid}`%>><%= `${file.name}, ${file.size}, ${file.createdDate}` %></a></li>
-        <%} else { %>
-            <li><%= `${file.name}, ${file.size}, ${file.createdDate}` %></li>
+        <%if( file.fileid ){%>
+                <!-- files -->
+                <li><%= `${file.name}, ${file.size}, ${file.createdDate}` %></li>
+            <%} else { %>
+                <!-- folders -->
+                <li><a href=<%=`/folders/${file.folderid}`%>><%= `${file.name}, ${file.size}, ${file.createdDate}` %></a></li>
         <%}%>                                    
     <%})%>                            
 </ul>

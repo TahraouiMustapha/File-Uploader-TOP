@@ -15,6 +15,7 @@ const mainPage = asyncHandler (async (req, res)=> {
     res.render("main", {
         userFiles: files?.length == 0 ? null : files , 
         newFolderHref: '/folders/new-folder' , 
+        newFileHref: '/files/new-file'
     })
 })
 
@@ -31,28 +32,29 @@ const createFolder = asyncHandler( async (req, res) => {
 })
 
 
-// folder obj
-// {
-//   folderid: 1,
-//   name: 'new one',
-//   size: null,
-//   createdDate: 2025-08-20T22:03:32.379Z,
-//   userid: 1,
-//   parentid: null,
-//   children: []
-// }
-
 const appearFolderContent = asyncHandler(async (req, res)=> {
-    const { userid } = req.user;
     const { folderid } = req.params;
     
     const folderObj = await db.getFolderFiles(Number(folderid))
-    const href = `/folders/${folderObj.folderid}/new-folder`;
+    const newFolderHref = `/folders/${folderObj.folderid}/new-folder`;
+    const newFileHref = `/files/${folderObj.folderid}/new-file`;
+    
+
+    const folders = folderObj?.children.length !== 0
+    const files = folderObj?.files.length !== 0
+
+    let foldersAndFiles = null
+    if(folders || files) {
+        foldersAndFiles = folderObj.children.concat(folderObj.files)
+                          .sort((a, b)=> compareAsc(a.createdDate, b.createdDate))
+    } 
+
 
     res.render("main" , {
         rootFolder: folderObj, 
-        userFiles: folderObj?.children.length == 0 ? null : folderObj.children, 
-        newFolderHref: href
+        userFiles: foldersAndFiles, 
+        newFolderHref: newFolderHref, 
+        newFileHref: newFileHref
     })
 })
 
@@ -63,7 +65,8 @@ const createNestedFolder = asyncHandler(async (req, res)=> {
 
     await db.createNestedFolder(Number(folderid), Number(userid), folderName);
 
-    res.redirect(req.get('referer') || '/')
+    const path = `/folders/${folderid}`
+    res.redirect(path)
 })
 
 

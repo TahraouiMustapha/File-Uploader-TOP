@@ -61,7 +61,8 @@ async function getFolderFiles(folderId) {
             folderid: folderId
         }, 
         include: {
-            children: true, 
+            children: true , 
+            files: true
         }
     })
 }
