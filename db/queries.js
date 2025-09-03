@@ -61,7 +61,7 @@ async function getFolderFiles(folderId) {
             folderid: folderId
         }, 
         include: {
-            children: true
+            children: true, 
         }
     })
 }
@@ -82,13 +82,31 @@ async function createNestedFolder(parentFolderId, ownerId, folderName) {
     })
 }
 
-async function createFile(name, size, ownerId, filedata) {
+async function createFile(fileObj) {
     await prisma.file.create({
         data: {
-            name: name, 
-            size: size, 
-            userid: ownerId, 
-            filedata: filedata
+            name: fileObj.name, 
+            size: fileObj.size, 
+            userid: fileObj.ownerId, 
+            filedata: fileObj.filedata
+        }
+    })
+}
+
+async function createFileToFolder(parentFolderId, fileObj) {
+    await prisma.folder.update({
+        where : {
+            folderid: parentFolderId
+        }, 
+        data : {
+            files: {
+                create: {
+                    name: fileObj.name, 
+                    size: fileObj.size, 
+                    userid: fileObj.ownerId, 
+                    filedata: fileObj.filedata
+                }
+            }
         }
     })
 }
@@ -101,5 +119,6 @@ module.exports = {
     getUserFiles, 
     getFolderFiles, 
     createNestedFolder, 
-    createFile
+    createFile, 
+    createFileToFolder
 }

@@ -5,8 +5,10 @@ const upload = multer({ storage: storage })
 
 const filesRouter = Router();
 const filesController = require("../controllers/filesController")
+
 // create a file without parent folder
 filesRouter.post('/new-file', upload.single('new-file'), filesController.createFile )
 
+filesRouter.post('/:folderid/new-file', upload.single('new-file'), filesController.createFileToFolder)
 
 module.exports = filesRouter;
