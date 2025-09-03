@@ -49,9 +49,11 @@ const appearFolderContent = asyncHandler(async (req, res)=> {
                           .sort((a, b)=> compareAsc(a.createdDate, b.createdDate))
     } 
 
+    const path = await getPath(folderObj)
 
     res.render("main" , {
         rootFolder: folderObj, 
+        path: `> ${path.join(' > ')}`,
         userFiles: foldersAndFiles, 
         newFolderHref: newFolderHref, 
         newFileHref: newFileHref
@@ -67,6 +69,17 @@ const createNestedFolder = asyncHandler(async (req, res)=> {
 
     const path = `/folders/${folderid}`
     res.redirect(path)
+})
+
+
+const getPath = asyncHandler(async (folderObj)=> {
+    if(folderObj.parentid) {
+        const folderParent = await db.getFolderById(folderObj.parentid) 
+        const path = await getPath(folderParent)
+        return path.concat([folderObj.name])
+    }
+
+    return [folderObj.name]
 })
 
 

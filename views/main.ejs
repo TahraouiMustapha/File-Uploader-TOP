@@ -10,7 +10,7 @@
             <button id="newFolderBtn">New folder</button>
 
             <div>
-                <p><%=user.username%>  <%= locals.rootFolder?`> ${rootFolder.name}`: null %></p>
+                <p><%=user.username%>  <%= locals.path ? path : null %></p>
                 <%if(userFiles) {%>
                     <%-include('partials/folderContent')%>
                 <%} else {%>

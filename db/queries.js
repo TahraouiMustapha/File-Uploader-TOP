@@ -36,6 +36,14 @@ async function createFolder(folderName, ownerId) {
     })
 }
 
+async function getFolderById(folderid) {
+    return await prisma.folder.findUnique({
+        where: {
+            folderid: folderid
+        }
+    })
+}
+
 async function getUserFiles(ownerId) {
     const [ folders, files ] = await prisma.$transaction([
         prisma.folder.findMany({
@@ -117,6 +125,7 @@ module.exports = {
     getUserById,
     getUserByUsername, 
     createFolder, 
+    getFolderById,
     getUserFiles, 
     getFolderFiles, 
     createNestedFolder, 
