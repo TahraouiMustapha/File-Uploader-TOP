@@ -1,6 +1,6 @@
 const db = require("../db/queries")
 const asyncHandler = require('express-async-handler')
-const { compareAsc } = require("date-fns")
+const { compareAsc } = require("date-fns");
 
 
 const mainPage = asyncHandler (async (req, res)=> {
@@ -83,9 +83,28 @@ const getPath = asyncHandler(async (folderObj)=> {
 })
 
 
+const deleteFolder = asyncHandler(async (req, res)=> {
+    const { folderid } = req.params;
+
+    const folder = await db.getFolderById(Number(folderid))
+
+    let folderParent = null;
+    if(folder.parentid) {
+        folderParent = await db.getFolderById(Number(folder.parentid))
+    }
+    await db.deleteFolder(Number(folderid))
+
+
+    folderParent ?
+    res.redirect(`/folders/${folderParent.folderid}`) :
+    res.redirect('/') ; 
+})
+
+
 module.exports = {
     mainPage, 
     createFolder, 
     appearFolderContent,
-    createNestedFolder
+    createNestedFolder, 
+    deleteFolder
 }

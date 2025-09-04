@@ -120,6 +120,31 @@ async function createFileToFolder(parentFolderId, fileObj) {
     })
 }
 
+
+async function deleteFolder(folderId) {
+    const deleteRelatedFolders = prisma.folder.deleteMany({
+        where : {
+            parentid: folderId
+        }
+    })
+    
+    const deleteRelatedFiles = prisma.file.deleteMany({
+        where: {
+            folderid: folderId
+        }
+    })
+
+    const deleteMainFolder = prisma.folder.delete({
+        where: {
+            folderid: folderId
+        }
+    })
+
+    await prisma.$transaction(
+        [deleteRelatedFolders, deleteRelatedFiles, deleteMainFolder]
+    )
+}
+
 module.exports = {
     createUser, 
     getUserById,
@@ -130,5 +155,6 @@ module.exports = {
     getFolderFiles, 
     createNestedFolder, 
     createFile, 
-    createFileToFolder
+    createFileToFolder, 
+    deleteFolder
 }

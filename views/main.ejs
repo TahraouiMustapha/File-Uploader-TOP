@@ -8,6 +8,9 @@
         <%if (locals.user) {%>
             <button id="newFileBtn">New file</button>
             <button id="newFolderBtn">New folder</button>
+            <%if(locals.rootFolder){%>
+                <button id="deleteFolderBtn">Delete Folder</button>
+            <%}%>    
 
             <div>
                 <p><%=user.username%>  <%= locals.path ? path : null %></p>
@@ -30,6 +33,11 @@
         <!-- new folder form -->
         <%-include('partials/newFolderForm')%>
 
+        <!-- delete folder dilaog -->
+        <%if(locals.rootFolder) {%>
+            <%-include('partials/deleteFolder', { folderid: rootFolder.folderid })%>
+        <%}%>    
+
     </body>
     <script>
         const newFileBtn = document.getElementById('newFileBtn');
@@ -41,6 +49,12 @@
         const newFolderDialog = document.querySelector('#newFolderDialog');
         const exitNewFolderBtn = document.querySelector('#exitNewFolderBtn')
         const folderNameInput = document.querySelector('input[name = \"folderName\"]')
+
+        const deleteFolderBtn = document.querySelector('#deleteFolderBtn');
+        const deleteDialog = document.querySelector('#deleteDialog');
+        const cancelDelete = document.querySelector('#cancelDelete');
+        const exitDeleteDialog = document.querySelector("#exitDeleteDialog")
+
 
  
         if(newFileBtn){
@@ -62,6 +76,21 @@
         exitNewFolderBtn.addEventListener('click', ()=> {
             folderNameInput.value = ''
             newFolderDialog.close()
+        })
+
+        // about ensuring the delete process
+        if(deleteFolderBtn) {
+            deleteFolderBtn.addEventListener('click', ()=> {
+                deleteDialog.showModal()
+            })
+        }
+
+        cancelDelete.addEventListener('click', ()=> {
+            deleteDialog.close()
+        })
+
+        exitDeleteDialog.addEventListener('click', ()=> {
+            deleteDialog.close()
         })
 
     </script>
