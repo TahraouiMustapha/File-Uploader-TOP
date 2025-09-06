@@ -7,6 +7,7 @@ const { getPath } = require('../services/foldersServices')
 
 const mainPage = asyncHandler (async (req, res)=> {
     const {user} = req;
+    const { selectedFileId } = req.query
 
     let files = null
     if(user) {
@@ -14,10 +15,16 @@ const mainPage = asyncHandler (async (req, res)=> {
         files.sort((a, b)=> compareAsc(a.createdDate, b.createdDate));
     }
 
+    let fileObj = null
+    if(selectedFileId) {
+        fileObj = await db.getFileById(Number(selectedFileId))
+    }
+
     res.render("main", {
         userFiles: files?.length == 0 ? null : files , 
         newFolderHref: '/folders/new-folder' , 
-        newFileHref: '/files/new-file'
+        newFileHref: '/files/new-file', 
+        clickedFile: fileObj
     })
 })
 
@@ -36,6 +43,7 @@ const createFolder = asyncHandler( async (req, res) => {
 
 const appearFolderContent = asyncHandler(async (req, res)=> {
     const { folderid } = req.params;
+    const { selectedFileId } = req.query
     
     const folderObj = await db.getFolderFiles(Number(folderid))
     const newFolderHref = `/folders/${folderObj.folderid}/new-folder`;
@@ -53,12 +61,18 @@ const appearFolderContent = asyncHandler(async (req, res)=> {
 
     const path = await getPath(folderObj)
 
+    let fileObj = null
+    if(selectedFileId) {
+        fileObj = await db.getFileById(Number(selectedFileId))
+    }
+
     res.render("main" , {
         rootFolder: folderObj, 
         path: `> ${path.join(' > ')}`,
         userFiles: foldersAndFiles, 
         newFolderHref: newFolderHref, 
-        newFileHref: newFileHref
+        newFileHref: newFileHref, 
+        clickedFile: fileObj
     })
 })
 
