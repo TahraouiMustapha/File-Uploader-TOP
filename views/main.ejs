@@ -26,6 +26,17 @@
             </div>
 
         <%}%>     
+
+        <!-- aside to appear file info -->
+         <%if(locals.clickedFile) {%>
+            <aside class="side" id="sideOfFileInfo">
+                <div class="head">
+                    <h2>File Information</h2>
+                    <button id="closeSide">X</button>
+                </div>
+                <p>Name: <%=clickedFile.name%></p>
+            </aside>
+        <%}%>
         
         <!-- uplaod file form -->
         <%-include('partials/uploadFileForm')%>
@@ -55,7 +66,10 @@
         const cancelDelete = document.querySelector('#cancelDelete');
         const exitDeleteDialog = document.querySelector("#exitDeleteDialog")
 
-
+        // for side that diplays file info
+        const side = document.querySelector('#sideOfFileInfo') 
+        const closeSideBtn = document.querySelector('#closeSide')
+        
  
         if(newFileBtn){
             newFileBtn.addEventListener('click', ()=> {
@@ -85,13 +99,24 @@
             })
         }
 
-        cancelDelete.addEventListener('click', ()=> {
-            deleteDialog.close()
-        })
+        if(cancelDelete) {
+            cancelDelete.addEventListener('click', ()=> {
+                deleteDialog.close()
+            })
+        }
 
-        exitDeleteDialog.addEventListener('click', ()=> {
-            deleteDialog.close()
-        })
+        if(exitDeleteDialog) {
+            exitDeleteDialog.addEventListener('click', ()=> {
+                deleteDialog.close()
+            })
+        }
+
+        // close the side 
+        if(closeSideBtn) {
+            closeSideBtn.addEventListener('click', ()=> {
+                side.style.display = 'none'
+            })
+        }
 
     </script>
 </html>

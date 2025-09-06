@@ -11,4 +11,6 @@ filesRouter.post('/new-file', upload.single('new-file'), filesController.createF
 
 filesRouter.post('/:folderid/new-file', upload.single('new-file'), filesController.createFileToFolder)
 
+filesRouter.get('/:fileid', filesController.viewFileDetails )
+
 module.exports = filesRouter;
