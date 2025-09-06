@@ -2,6 +2,8 @@ const db = require("../db/queries")
 const asyncHandler = require('express-async-handler')
 const { compareAsc } = require("date-fns");
 
+const { getPath } = require('../services/foldersServices') 
+
 
 const mainPage = asyncHandler (async (req, res)=> {
     const {user} = req;
@@ -69,17 +71,6 @@ const createNestedFolder = asyncHandler(async (req, res)=> {
 
     const path = `/folders/${folderid}`
     res.redirect(path)
-})
-
-
-const getPath = asyncHandler(async (folderObj)=> {
-    if(folderObj.parentid) {
-        const folderParent = await db.getFolderById(folderObj.parentid) 
-        const path = await getPath(folderParent)
-        return path.concat([folderObj.name])
-    }
-
-    return [folderObj.name]
 })
 
 
