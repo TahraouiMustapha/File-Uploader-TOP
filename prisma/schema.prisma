@@ -44,6 +44,7 @@ model File {
   name String
   size Int?
   createdDate DateTime @updatedAt
+  mimetype String
 
   owner User @relation(fields: [userid], references: [userid])
   userid Int

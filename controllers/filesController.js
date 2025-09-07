@@ -4,12 +4,13 @@ const db = require('../db/queries')
 const path = require('path')
 
 
-function fileObjMaker (name, size, userid, filedata) {
+function fileObjMaker (fileObj, userid) {
     return {
-        name, 
-        size, 
+        name: fileObj.originalname, 
+        size: fileObj.size , 
+        mimetype: fileObj.mimetype,
         ownerId: userid, 
-        filedata
+        filedata: fileObj.buffer
     }
 }
 
@@ -17,7 +18,7 @@ const createFile = asyncHandler( async (req, res)=> {
     const { userid } = req.user
     const { file } = req
 
-    await db.createFile( fileObjMaker(file.originalname, file.size, userid, file.buffer) )
+    await db.createFile( fileObjMaker(file, Number(userid)) )
     
     res.redirect(req.get('referer') || '/')
 })
@@ -28,7 +29,7 @@ const createFileToFolder = asyncHandler(async(req, res)=> {
     const { file } = req;
     const { folderid } = req.params;
 
-    await db.createFileToFolder(Number(folderid), fileObjMaker(file.originalname, file.size, userid, file.buffer));
+    await db.createFileToFolder(Number(folderid), fileObjMaker(file, Number(userid)));
     
 
     const path = `/folders/${folderid}`;

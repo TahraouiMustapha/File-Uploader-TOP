@@ -104,6 +104,7 @@ async function createFile(fileObj) {
         data: {
             name: fileObj.name, 
             size: fileObj.size, 
+            mimetype: fileObj.mimetype,
             userid: fileObj.ownerId, 
             filedata: fileObj.filedata
         }
@@ -120,6 +121,7 @@ async function createFileToFolder(parentFolderId, fileObj) {
                 create: {
                     name: fileObj.name, 
                     size: fileObj.size, 
+                    mimetype: fileObj.mimetype,
                     userid: fileObj.ownerId, 
                     filedata: fileObj.filedata
                 }
