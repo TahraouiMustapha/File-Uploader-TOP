@@ -20,7 +20,7 @@ const createFile = asyncHandler( async (req, res)=> {
 
     await db.createFile( fileObjMaker(file, Number(userid)) )
     
-    res.redirect(req.get('referer') || '/')
+    res.redirect('/')
 })
 
 
@@ -54,12 +54,15 @@ const downlaodFile = asyncHandler(async(req, res) => {
 
     const fileObj = await db.getFileById(Number(fileid))
 
-    console.log(req.file)
+    const filename = path.basename(fileObj.name)
+    const mimetype = fileObj.mimetype
 
     res.set({
-        "Content-Type": "image/jpeg", 
-        "Content-Disposition": "attachment;filename = boy.jpg"
+        "Content-Type": mimetype, 
+        "Content-Length": fileObj.filedata.length, // buffer length
+        "Content-Disposition": `attachment ; filename = ${filename}`
     })
+
     res.end(fileObj.filedata)
 })
 
