@@ -15,4 +15,6 @@ filesRouter.get('/:fileid', filesController.viewFileDetails )
 
 filesRouter.get('/download/:fileid', filesController.downlaodFile )
 
+filesRouter.get('/delete/:fileid', filesController.deleteFile )
+
 module.exports = filesRouter;

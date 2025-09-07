@@ -155,6 +155,14 @@ async function deleteFolder(folderId) {
     )
 }
 
+async function deleteFile(fileid) {
+    await prisma.file.delete({
+        where: {
+            fileid: fileid
+        }
+    })
+}
+
 module.exports = {
     createUser, 
     getUserById,
@@ -167,5 +175,6 @@ module.exports = {
     createNestedFolder, 
     createFile, 
     createFileToFolder, 
-    deleteFolder
+    deleteFolder, 
+    deleteFile
 }

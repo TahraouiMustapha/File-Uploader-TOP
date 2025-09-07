@@ -66,9 +66,23 @@ const downlaodFile = asyncHandler(async(req, res) => {
     res.end(fileObj.filedata)
 })
 
+const deleteFile = asyncHandler(async (req, res)=> {
+    const { fileid } = req.params
+
+    const fileObj = await db.getFileById(Number(fileid))
+    await db.deleteFile(Number(fileid));
+
+    const path = fileObj.folderid 
+                ? `/folders/${fileObj.folderid}`
+                : '/'
+
+    res.redirect(path)
+})
+
 module.exports = {
     createFile, 
     createFileToFolder,
     viewFileDetails, 
-    downlaodFile
+    downlaodFile, 
+    deleteFile
 }
