@@ -1,6 +1,8 @@
 const asyncHandler = require("express-async-handler")
 const db = require('../db/queries')
 
+const path = require('path')
+
 
 function fileObjMaker (name, size, userid, filedata) {
     return {
@@ -46,8 +48,23 @@ const viewFileDetails = asyncHandler(async (req, res)=> {
     res.redirect(path)
 })
 
+const downlaodFile = asyncHandler(async(req, res) => {
+    const { fileid } = req.params;
+
+    const fileObj = await db.getFileById(Number(fileid))
+
+    console.log(req.file)
+
+    res.set({
+        "Content-Type": "image/jpeg", 
+        "Content-Disposition": "attachment;filename = boy.jpg"
+    })
+    res.end(fileObj.filedata)
+})
+
 module.exports = {
     createFile, 
     createFileToFolder,
-    viewFileDetails
+    viewFileDetails, 
+    downlaodFile
 }

@@ -13,4 +13,6 @@ filesRouter.post('/:folderid/new-file', upload.single('new-file'), filesControll
 
 filesRouter.get('/:fileid', filesController.viewFileDetails )
 
+filesRouter.get('/download/:fileid', filesController.downlaodFile )
+
 module.exports = filesRouter;
