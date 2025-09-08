@@ -45,14 +45,14 @@ model File {
   size Int?
   createdDate DateTime @updatedAt
   mimetype String
+  path String
+  publicUrl String
 
   owner User @relation(fields: [userid], references: [userid])
   userid Int
 
   parentFolder Folder? @relation(fields: [folderid], references: [folderid])
   folderid Int?
-
-  filedata Bytes
 }
 
 model Session {
