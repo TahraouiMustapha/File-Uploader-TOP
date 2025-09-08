@@ -79,16 +79,17 @@ const downlaodFile = asyncHandler(async(req, res) => {
 
     const fileObj = await db.getFileById(Number(fileid))
 
+    // download the file from supabase storage
+    const filedata = await FileService.download(fileObj.path)
+
     const filename = path.basename(fileObj.name)
-    const mimetype = fileObj.mimetype
+    
+    const arraybuffer = await filedata.arrayBuffer()
+    const fileBuffer = Buffer.from(arraybuffer)
 
-    res.set({
-        "Content-Type": mimetype, 
-        "Content-Length": fileObj.filedata.length, // buffer length
-        "Content-Disposition": `attachment ; filename = ${filename}`
-    })
+    res.setHeader("Content-Disposition", `attachment ; filename = "${filename}"`)
 
-    res.end(fileObj.filedata)
+    res.send(fileBuffer)
 })
 
 const deleteFile = asyncHandler(async (req, res)=> {

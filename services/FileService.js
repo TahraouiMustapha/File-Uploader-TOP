@@ -8,9 +8,7 @@ class FileService {
         try {
 
             const fileExt = file.originalname.split('.').pop()
-            console.log('fileExt: ', fileExt )        
             const filename = `${userid}/${v4()}.${fileExt}`
-            console.log('filenaem ', filename)
 
             // convert to ArrayBuffer that supabase expected
             const fileBased64 = decode(file.buffer.toString("base64"))
@@ -22,7 +20,6 @@ class FileService {
                 upsert: false, // do not overwrite files
             })
 
-            console.log('first uplaod data obj: ', data)
 
             if(error) {
                 throw new Error(`Uplaod failed: ${error.message}` )
@@ -42,6 +39,23 @@ class FileService {
             }
 
         } catch(err) {
+            throw err
+        }
+    }
+
+    static async download(filePath) {
+        try {
+            const { data, error }  = await supabase.storage
+            .from('files')
+            .download(filePath)
+
+            if(error) {
+                throw new Error('download failed: ', error.message)
+            }
+
+            return data;
+
+        } catch (err) {
             throw err
         }
     }
