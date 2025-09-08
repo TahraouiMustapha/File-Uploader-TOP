@@ -106,7 +106,8 @@ async function createFile(fileObj) {
             size: fileObj.size, 
             mimetype: fileObj.mimetype,
             userid: fileObj.ownerId, 
-            filedata: fileObj.filedata
+            path: fileObj.path, 
+            publicUrl: fileObj.publicUrl
         }
     })
 }
@@ -123,7 +124,8 @@ async function createFileToFolder(parentFolderId, fileObj) {
                     size: fileObj.size, 
                     mimetype: fileObj.mimetype,
                     userid: fileObj.ownerId, 
-                    filedata: fileObj.filedata
+                    path: fileObj.path, 
+                    publicUrl: fileObj.publicUrl
                 }
             }
         }
