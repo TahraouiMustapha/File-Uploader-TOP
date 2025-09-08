@@ -59,6 +59,24 @@ class FileService {
             throw err
         }
     }
+
+    static async deleteFile(filePath) {
+        try {
+
+            const { data, error } = await supabase.storage
+            .from('files')
+            .remove([filePath])
+
+            if(error) {
+                throw new Error('Delete failed: ' ,error.message)
+            }
+
+            return data;
+
+        } catch(err) {
+            throw err
+        }
+    }
 }
 
 module.exports = FileService

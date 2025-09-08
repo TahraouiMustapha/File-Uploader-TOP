@@ -96,6 +96,10 @@ const deleteFile = asyncHandler(async (req, res)=> {
     const { fileid } = req.params
 
     const fileObj = await db.getFileById(Number(fileid))
+
+    // delete the file from supabase storage
+    await FileService.deleteFile(fileObj.path)
+
     await db.deleteFile(Number(fileid));
 
     const path = fileObj.folderid 
