@@ -21,6 +21,11 @@ app.set("views", path.join(__dirname, "views"))
 app.set("view engine", "ejs")
 app.use(flash())
 
+// serving static files
+const assetsPath = path.join(__dirname, "public")
+app.use(express.static(assetsPath))
+
+
 // sessions config
 app.use(
     expressSession({
