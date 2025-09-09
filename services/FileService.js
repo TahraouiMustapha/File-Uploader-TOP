@@ -77,6 +77,25 @@ class FileService {
             throw err
         }
     }
+
+    static async deleteManyFiles(arrayOfPaths) {
+        try {
+            const { data, error } = await supabase
+            .storage
+            .from('files')
+            .remove(arrayOfPaths)
+
+            if (error) {
+                throw new Error('Delete files fails: ', error.message)
+            }
+
+            return data
+
+        } catch(err) {
+            throw err
+        }
+
+    }
 }
 
 module.exports = FileService

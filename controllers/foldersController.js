@@ -3,6 +3,7 @@ const asyncHandler = require('express-async-handler')
 const { compareAsc } = require("date-fns");
 
 const { getPath } = require('../services/foldersServices') 
+const FileService = require('../services/FileService')
 
 
 const mainPage = asyncHandler (async (req, res)=> {
@@ -91,12 +92,19 @@ const createNestedFolder = asyncHandler(async (req, res)=> {
 const deleteFolder = asyncHandler(async (req, res)=> {
     const { folderid } = req.params;
 
-    const folder = await db.getFolderById(Number(folderid))
+    const folder = await db.getFolderFiles(Number(folderid))
+
+    if(folder.files.length > 0){    
+        // delete related files from supabase storage
+        const arrOfFiles = folder.files.map((file)=> file.path )
+        await FileService.deleteManyFiles(arrOfFiles)
+    }
 
     let folderParent = null;
     if(folder.parentid) {
         folderParent = await db.getFolderById(Number(folder.parentid))
     }
+
     await db.deleteFolder(Number(folderid))
 
 
