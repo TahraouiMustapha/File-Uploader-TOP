@@ -6,14 +6,6 @@ const path = require('path')
 const FileService = require('../services/FileService')
 
 
-            // return {
-            //     path: data.path, 
-            //     publicUrl: fileObj.publicUrl, 
-            //     name: file.originalname, 
-            //     size: file.size, 
-            //     mimetype: file.mimetype
-            // }
-
 function fileObjMaker (fileObj, userid) {
     return {
         name: fileObj.name, 
@@ -30,7 +22,9 @@ const createFile = asyncHandler( async (req, res)=> {
     const { file } = req
 
     if(!file) {
-        return res.status(400).json({ message: "please upload a file " });
+        req.flash('dialog', 'upload')
+        req.flash('error', 'Upload a file first')
+        return res.status(400).redirect('/');
     }
 
     // upload the file to supabase storage
@@ -39,7 +33,6 @@ const createFile = asyncHandler( async (req, res)=> {
     await db.createFile( fileObjMaker(uplaodResult, Number(userid)) )
 
     res.redirect('/')
-    
 })
 
 
@@ -48,8 +41,12 @@ const createFileToFolder = asyncHandler(async(req, res)=> {
     const { file } = req;
     const { folderid } = req.params;
 
+    const path = `/folders/${folderid}`;
+
     if(!file) {
-        return res.status(400).json({ message: "please upload a file " });
+        req.flash('dialog', 'upload')
+        req.flash('error', 'Upload a file first')
+        return res.status(400).redirect(path);        
     }
 
     // upload the file to supabase storage
@@ -57,7 +54,6 @@ const createFileToFolder = asyncHandler(async(req, res)=> {
 
     await db.createFileToFolder(Number(folderid), fileObjMaker(uplaodResult, Number(userid)));
     
-    const path = `/folders/${folderid}`;
     res.redirect(path)
 })
     

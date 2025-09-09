@@ -46,6 +46,12 @@
         
         <!-- uplaod file form -->
         <%-include('partials/uploadFileForm')%>
+         <%if(messages.dialog == 'upload'){ %>
+            <script>
+                const newFileDialog = document.querySelector('#newFileDialog');
+                newFileDialog.showModal()
+            </script>
+        <%}%>
 
         <!-- new folder form -->
         <%-include('partials/newFolderForm')%>
@@ -58,7 +64,6 @@
     </body>
     <script>
         const newFileBtn = document.getElementById('newFileBtn');
-        const newFileDialog = document.querySelector('#newFileDialog');
         const exitNewFileBtn = document.getElementById('exitNewFileBtn');
 
 
@@ -79,13 +84,13 @@
  
         if(newFileBtn){
             newFileBtn.addEventListener('click', ()=> {
-            newFileDialog.showModal()
+                newFileDialog.showModal()
             })
         }
 
         if(newFolderBtn){
             newFolderBtn.addEventListener('click', ()=> {
-            newFolderDialog.showModal()
+                newFolderDialog.showModal()
             })
         }
 
