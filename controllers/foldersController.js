@@ -15,8 +15,6 @@ const mainPage = asyncHandler (async (req, res)=> {
             title: 'Sign Up'
         })
     }
-
-    let files = null
     
     files = await db.getUserFiles(user.userid)
     files.sort((a, b)=> compareAsc(a.createdDate, b.createdDate));
