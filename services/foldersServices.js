@@ -14,6 +14,15 @@ const getPath = asyncHandler(async (folderObj)=> {
     return [folderObj.name]
 })
 
+const getSize = function(size) {
+    if(size < 1024) {
+        return `${size}b`;
+    } 
+
+    return `${Math.floor(size / 1024)}kB`;
+}
+
 module.exports = {
-    getPath
+    getPath, 
+    getSize
 }

@@ -123,6 +123,10 @@ li:hover {
     border-color: var(--second-clr);
 }
 
+li .size {
+    font-size: 0.9em;
+}
+
 
 
 
