@@ -26,6 +26,10 @@ body {
     flex-direction: column;
 }
 
+ul {
+    list-style-type: none;
+}
+
 /* header styles */
 .header {
     height: 10vh;

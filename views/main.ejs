@@ -31,16 +31,25 @@
                 <div class="navigation-state">
                     <p><%=user.username%>  <%= locals.path ? path : null %></p>
                 </div>
-                <div>
-                    <%if(userFiles) {%>
-                        <%-include('partials/folderContent')%>
-                    <%} else {%>
-                        <%if(locals.rootFolder) { %>
-                            <p>no files or folders to display</p>
-                        <%} else { %>
-                            <p>Create a new folder to get started</p>
+                <div class="content">
+                    <div class="titles">
+                        <div>Name</div>
+                        <div>Size</div>
+                        <div>Created</div>
+                    </div>
+                        <%if(userFiles) {%>
+                            <div class="files-container">
+                                <%-include('partials/folderContent')%>
+                            </div>
+                        <%} else {%>
+                            <div class="message-no-files">
+                                <%if(locals.rootFolder) { %>
+                                    <p>no files or folders to display</p>
+                                <%} else { %>
+                                    <p>Create a new folder to get started</p>
+                                <%}%>
+                            </div>
                         <%}%>
-                    <%}%>
                 </div>
             </div>
 

@@ -1,6 +1,6 @@
 const db = require("../db/queries")
 const asyncHandler = require('express-async-handler')
-const { compareAsc } = require("date-fns");
+const { compareAsc, format } = require("date-fns");
 
 const { getPath } = require('../services/foldersServices') 
 const FileService = require('../services/FileService')
@@ -18,6 +18,9 @@ const mainPage = asyncHandler (async (req, res)=> {
     
     files = await db.getUserFiles(user.userid)
     files.sort((a, b)=> compareAsc(a.createdDate, b.createdDate));
+    files = files.map(file => (
+        {...file, createdDate: format(file.createdDate, 'PPP')}
+    ))
         
     let fileObj = null
     if(selectedFileId) {
@@ -61,6 +64,9 @@ const appearFolderContent = asyncHandler(async (req, res)=> {
     if(folders || files) {
         foldersAndFiles = folderObj.children.concat(folderObj.files)
                           .sort((a, b)=> compareAsc(a.createdDate, b.createdDate))
+        foldersAndFiles = foldersAndFiles.map(file => (
+            {...file, createdDate: format(file.createdDate, 'PPP')}
+        ))                          
     } 
 
     const path = await getPath(folderObj)
