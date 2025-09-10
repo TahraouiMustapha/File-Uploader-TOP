@@ -10,12 +10,17 @@ const mainPage = asyncHandler (async (req, res)=> {
     const {user} = req;
     const { selectedFileId } = req.query
 
-    let files = null
-    if(user) {
-        files = await db.getUserFiles(user.userid)
-        files.sort((a, b)=> compareAsc(a.createdDate, b.createdDate));
+    if(!user) {
+        return res.render("sign-up", {
+            title: 'Sign Up'
+        })
     }
 
+    let files = null
+    
+    files = await db.getUserFiles(user.userid)
+    files.sort((a, b)=> compareAsc(a.createdDate, b.createdDate));
+        
     let fileObj = null
     if(selectedFileId) {
         fileObj = await db.getFileById(Number(selectedFileId))
