@@ -97,7 +97,9 @@ const appearFolderContent = asyncHandler(async (req, res)=> {
 const createNestedFolder = asyncHandler(async (req, res)=> {
     const { folderid } = req.params;
     const { userid } = req.user;
-    const { folderName } = req.body;
+    let { folderName } = req.body;
+
+    if (folderName.trim() == '') folderName = 'New Folder';
 
     await db.createNestedFolder(Number(folderid), Number(userid), folderName);
 

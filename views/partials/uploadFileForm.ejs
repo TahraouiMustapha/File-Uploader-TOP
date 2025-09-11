@@ -1,9 +1,14 @@
 <dialog id="newFileDialog">
     <form action=<%=locals.newFileHref || '/files/new-file'%> method="post" enctype="multipart/form-data">
-        <button type="button" id="exitNewFileBtn">X</button>
-        <input type="file" name="new-file">
+        <div>
+            <h2 class="title">New File</h2>
+            <button type="button" id="exitNewFileBtn">X</button>
+        </div>
+    
+        <p><input type="file" name="new-file"></p>
+
         <%-include('errors')%>
 
-        <button type="submit">Upload</button>
+        <button type="submit" class="dialog-submit-btn">Upload</button>
     </form>
-</dialog>
+</dialog>   

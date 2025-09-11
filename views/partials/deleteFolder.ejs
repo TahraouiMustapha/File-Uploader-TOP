@@ -1,10 +1,13 @@
 <dialog id="deleteDialog">
-    <div>
-        <button id="exitDeleteDialog">X</button>
+    <form>
+        <div>
+            <h2 class="title">Delete Folder</h2>
+            <button id="exitDeleteDialog">X</button>
+        </div>
         <p>Are you sure to delete this folder ? </p>
         <div class="btns">
-            <button id="cancelDelete">cancel</button>
-            <a href=<%=`/folders/delete/${folderid}`%>>delete</a>
+            <button id="cancelDelete" type="button">cancel</button>
+            <a href=<%=`/folders/delete/${folderid}`%> class="dialog-submit-btn">delete</a>
         </div>
-    </div>
+    </form>
 </dialog>
