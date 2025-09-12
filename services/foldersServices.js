@@ -8,10 +8,16 @@ const getPath = asyncHandler(async (folderObj)=> {
     if(folderObj.parentid) {
         const folderParent = await db.getFolderById(folderObj.parentid) 
         const path = await getPath(folderParent)
-        return path.concat([folderObj.name])
+        return path.concat([{
+            folderName: folderObj.name, 
+            folderHref: `/folders/${folderObj.folderid}`
+        }])
     }
 
-    return [folderObj.name]
+    return [{
+        folderName: folderObj.name, 
+        folderHref: `/folders/${folderObj.folderid}`
+    }]
 })
 
 const getSize = function(size) {

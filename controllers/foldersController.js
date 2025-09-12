@@ -96,7 +96,7 @@ const appearFolderContent = asyncHandler(async (req, res)=> {
 
     res.render("main" , {
         rootFolder: folderObj, 
-        path: `> ${path.join(' > ')}`,
+        path: path,
         userFiles: foldersAndFiles, 
         newFolderHref: newFolderHref, 
         newFileHref: newFileHref, 

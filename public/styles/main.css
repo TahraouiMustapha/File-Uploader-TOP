@@ -64,6 +64,10 @@ a {
     color: var(--txt-clr);
 }
 
+.navigation-state a + a {
+    color: var(--second-clr);
+}
+
 .content {
     --grid-clmn: 3fr repeat(2, 1fr);
     padding: 1rem;

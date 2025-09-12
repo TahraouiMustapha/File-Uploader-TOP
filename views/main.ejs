@@ -29,7 +29,16 @@
 
             <div class="main-content">
                 <div class="navigation-state">
-                    <p><%=user.username%>  <%= locals.path ? path : null %></p>
+                    <%if(locals.path) {%>
+                        <p>
+                            <a href="/"><%=user.username%></a> 
+                            <%path.forEach(pathObj => {%>
+                                <%='>'%> <a href=<%=pathObj.folderHref%>> <%=pathObj.folderName%></a>
+                            <%})%>
+                        </p>
+                    <%} else {%>
+                            <p><a href="/"><%=user.username%></a></p>
+                    <%}%>                            
                 </div>
                 <div class="content">
                     <div class="titles">
