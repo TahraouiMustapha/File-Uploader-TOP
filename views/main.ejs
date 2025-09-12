@@ -53,7 +53,9 @@
                 </div>
             </div>
 
-            
+    
+            <!-- aside to appear file info -->
+             <%if(locals.clickedFile) {%>
                 <aside class="side" id="sideOfFileInfo">
                     <div class="head">
                         <h2>File Information</h2>
@@ -61,39 +63,30 @@
                     </div>
                     <div class="info">
                         <p>
-                            <span>Name</span> : file.ext
+                            <span>Name</span> : <%=clickedFile.name%>
                         </p>
                         <p>
-                            <span>Type</span> : tpe
+                            <span>Type</span> : <%=clickedFile.mimetype%>
                         </p>
                         <p>
-                            <span>Size</span> : sss
+                            <span>Size</span> : <%=clickedFile.size%>
                         </p>
                         <p>
-                            <span>Created</span> : date 
+                            <span>Created</span> : <%=clickedFile.createdDate%> 
                         </p>
                     
                     </div>
                     <div class="btns">
                         <button class="closeSide">close</button>
-                        <a href="/files/delete/1">delete</a>
-                        <a href="/files/download/1" id="downloadBtn">download</a>
+                        <a href="/files/delete/<%=clickedFile.fileid%>">delete</a>
+                        <a href="/files/download/<%=clickedFile.fileid%>" id="downloadBtn">download</a>
                     </div>
                 </aside>
 
-            <!-- aside to appear file info -->
-             <%if(locals.clickedFile) {%>
-                <!-- <aside class="side" id="sideOfFileInfo">
-                    <div class="head">
-                        <h2>File Information</h2>
-                        <button id="closeSide">X</button>
-                    </div>
-                    <p>Name: <%=clickedFile.name%></p>
-                    <div class="btns">
-                        <a href="/files/download/<%=clickedFile.fileid%>">download</a>
-                        <a href="/files/delete/<%=clickedFile.fileid%>">delete</a>
-                    </div>
-                </aside> -->
+                <script>
+                    const side = document.querySelector('#sideOfFileInfo') 
+                    side.style.transform = 'scaleX(1)'
+                </script>
             <%}%>
             
             <!-- uplaod file form -->
@@ -129,7 +122,6 @@
         const exitDeleteDialog = document.querySelector("#exitDeleteDialog")
 
         // for side that diplays file info
-        const side = document.querySelector('#sideOfFileInfo') 
         const closeSideBtn = Array.from(document.querySelectorAll('.closeSide'))
         
  
@@ -177,7 +169,7 @@
         if(closeSideBtn.length > 0) {
             closeSideBtn.forEach(btn => {
                 btn.addEventListener('click', ()=> {
-                    side.style.display = 'none'
+                    side.style.transform = 'scaleX(0)'
                 })
             })
         }

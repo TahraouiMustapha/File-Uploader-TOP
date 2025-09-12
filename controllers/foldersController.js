@@ -29,6 +29,11 @@ const mainPage = asyncHandler (async (req, res)=> {
     let fileObj = null
     if(selectedFileId) {
         fileObj = await db.getFileById(Number(selectedFileId))
+        if(fileObj) fileObj = {
+            ...fileObj, 
+            size: getSize(fileObj.size), 
+            createdDate: format(fileObj.createdDate, 'PPP   h:m aa' )
+        }
     }
 
     res.render("main", {
@@ -82,6 +87,11 @@ const appearFolderContent = asyncHandler(async (req, res)=> {
     let fileObj = null
     if(selectedFileId) {
         fileObj = await db.getFileById(Number(selectedFileId))
+        if(fileObj) fileObj = {
+            ...fileObj, 
+            size: getSize(fileObj.size), 
+            createdDate: format(fileObj.createdDate, 'PPP   h:m aa' )
+        }
     }
 
     res.render("main" , {
