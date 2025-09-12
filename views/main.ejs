@@ -53,10 +53,37 @@
                 </div>
             </div>
 
+            
+                <aside class="side" id="sideOfFileInfo">
+                    <div class="head">
+                        <h2>File Information</h2>
+                        <button class="closeSide">X</button>
+                    </div>
+                    <div class="info">
+                        <p>
+                            <span>Name</span> : file.ext
+                        </p>
+                        <p>
+                            <span>Type</span> : tpe
+                        </p>
+                        <p>
+                            <span>Size</span> : sss
+                        </p>
+                        <p>
+                            <span>Created</span> : date 
+                        </p>
+                    
+                    </div>
+                    <div class="btns">
+                        <button class="closeSide">close</button>
+                        <a href="/files/delete/1">delete</a>
+                        <a href="/files/download/1" id="downloadBtn">download</a>
+                    </div>
+                </aside>
 
             <!-- aside to appear file info -->
              <%if(locals.clickedFile) {%>
-                <aside class="side" id="sideOfFileInfo">
+                <!-- <aside class="side" id="sideOfFileInfo">
                     <div class="head">
                         <h2>File Information</h2>
                         <button id="closeSide">X</button>
@@ -66,7 +93,7 @@
                         <a href="/files/download/<%=clickedFile.fileid%>">download</a>
                         <a href="/files/delete/<%=clickedFile.fileid%>">delete</a>
                     </div>
-                </aside>
+                </aside> -->
             <%}%>
             
             <!-- uplaod file form -->
@@ -103,7 +130,7 @@
 
         // for side that diplays file info
         const side = document.querySelector('#sideOfFileInfo') 
-        const closeSideBtn = document.querySelector('#closeSide')
+        const closeSideBtn = Array.from(document.querySelectorAll('.closeSide'))
         
  
         if(newFileBtn){
@@ -147,9 +174,11 @@
         }
 
         // close the side 
-        if(closeSideBtn) {
-            closeSideBtn.addEventListener('click', ()=> {
-                side.style.display = 'none'
+        if(closeSideBtn.length > 0) {
+            closeSideBtn.forEach(btn => {
+                btn.addEventListener('click', ()=> {
+                    side.style.display = 'none'
+                })
             })
         }
 

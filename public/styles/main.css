@@ -3,8 +3,14 @@
     flex: 1;
     display: grid;
     grid-template-columns: 20% 1fr;
+
+    position: relative;
 }
 
+a {
+    text-decoration: none;
+    color: inherit;
+}
 /* left side style */
 
 .left-side {
@@ -201,7 +207,8 @@ input:focus {
     filter: brightness(80%);
 }
 
-dialog div > button {
+dialog div > button , 
+.head .closeSide {
     border: none;
     background-color: hsl(240 5.1% 15%);     
     color: var(--txt-clr);
@@ -210,7 +217,8 @@ dialog div > button {
     cursor: pointer;
 }
 
-dialog div > button:hover {
+dialog div > button:hover , 
+.head .closeSide:hover {
     color: var(--second-clr);
 }
 
@@ -233,3 +241,75 @@ dialog .btns {
 
     margin-top: 32px;
 }
+
+/* style file details container */
+
+aside {
+    background-color: hsl(240 5.1% 15%);
+    position: absolute;
+    height: 100%;
+    width: 400px;
+    right: 0;
+    top: 0;
+    overflow-x: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+aside .head {
+    padding: 1.8rem;
+    display: flex;
+    justify-content: space-between;
+} 
+
+aside .head h2 {
+    font-weight: 400;
+    color: white;
+} 
+
+aside .btns {
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-around;
+}
+
+aside .btns  a , 
+aside .btns button {
+    color: var(--txt-clr);
+    padding: 0.8rem;
+    background-color: #2c2c2c8f;
+    border: var(--border-clr) 0.5px solid;
+    cursor: pointer;
+
+    font-size: 1em;
+    border-radius: 4px;
+}
+
+aside .btns a:hover , 
+aside .btns button:hover {
+    background-color: var(--second-clr);
+    border: var(--second-clr) 0.5px solid;
+    box-shadow: 0 0 15px var(--second-clr);
+}
+
+#downloadBtn {
+    background-color: var(--second-clr);
+    border: var(--second-clr);
+}
+
+
+aside .info {
+    color: var(--txt-clr);
+    padding: 0 1rem;
+    font-size: 1.1em;
+    
+    display: grid;
+    grid-auto-rows: 60px;
+}
+
+.info span {
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
