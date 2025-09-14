@@ -13,7 +13,7 @@
     --main-clr: #0a0a0c;
     --txt-clr: rgb(204, 204, 209);
     --second-clr: #40a9ff6b;
-    --border-clr: #818181c5;
+    --border-clr: #b4b4b4be;
     box-sizing: border-box;
 }
 
@@ -69,6 +69,10 @@ ul {
     box-shadow: 0 0 15px var(--second-clr);
 }
 
+.logOutLogo {
+    position: relative;
+}
+
 .logOutLogo svg{
     width: 32;
     fill: #434343;
@@ -79,3 +83,16 @@ ul {
     fill: var(--second-clr)
 }
 
+.tooltip {
+    padding: 6px;
+    width: auto;
+    height: auto;
+    background-color: var(--border-clr);
+    color: #0a0a0c;
+    border-radius: 8px;
+    position: absolute;
+    transform: translate(-25%, 20%);
+
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
