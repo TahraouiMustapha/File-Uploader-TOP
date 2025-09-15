@@ -165,6 +165,17 @@ async function deleteFile(fileid) {
     })
 }
 
+async function addFolderShareId(folderid, shareId) {
+    return await prisma.folder.update({
+        where: {
+            folderid: folderid
+        }, 
+        date: {
+            shareId: shareId
+        }
+    })
+}
+
 module.exports = {
     createUser, 
     getUserById,
@@ -178,5 +189,6 @@ module.exports = {
     createFile, 
     createFileToFolder, 
     deleteFolder, 
-    deleteFile
+    deleteFile, 
+    addFolderShareId
 }

@@ -37,6 +37,9 @@ model Folder {
   children Folder[] @relation("parentFolder")
   parentid Int?
   parent Folder? @relation("parentFolder", fields: [parentid], references: [folderid]) 
+
+  // random string to share folder
+  shareId String?
 }
 
 model File {
