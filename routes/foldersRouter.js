@@ -11,4 +11,6 @@ folderRouter.post('/:folderid/new-folder' , foldersController.createNestedFolder
 
 folderRouter.get('/delete/:folderid', foldersController.deleteFolder )
 
+folderRouter.get('/:folderid/share', foldersController.generateShareLink )
+
 module.exports = folderRouter

@@ -165,13 +165,13 @@ async function deleteFile(fileid) {
     })
 }
 
-async function addFolderShareId(folderid, shareId) {
+async function addFolderShareId(folderid, shareid) {
     return await prisma.folder.update({
         where: {
             folderid: folderid
         }, 
-        date: {
-            shareId: shareId
+        data: {
+            shareId: shareid
         }
     })
 }

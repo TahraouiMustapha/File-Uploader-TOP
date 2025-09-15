@@ -5,6 +5,8 @@ const { compareAsc, format } = require("date-fns");
 const { getPath, getSize } = require('../services/foldersServices') 
 const FileService = require('../services/FileService')
 
+const {v4: uuidV4} = require('uuid')
+
 
 const mainPage = asyncHandler (async (req, res)=> {
     const {user} = req;
@@ -31,7 +33,7 @@ const mainPage = asyncHandler (async (req, res)=> {
         fileObj = await db.getFileById(Number(selectedFileId))
         if(fileObj) fileObj = {
             ...fileObj, 
-            size: getSize(fileObj.size), 
+            size: getSize(fileObj.size),
             createdDate: format(fileObj.createdDate, 'PPP   h:m aa' )
         }
     }
@@ -142,11 +144,23 @@ const deleteFolder = asyncHandler(async (req, res)=> {
     res.redirect('/') ; 
 })
 
+const generateShareLink = asyncHandler(async (req, res)=> {
+    const { folderid } = req.params;
+
+    const shareid = uuidV4()
+    const folderUpdated = await db.addFolderShareId(Number(folderid), shareid)
+
+    console.log(`share/${shareid}`)
+
+    res.send(`/share/${shareid}`)
+})
+
 
 module.exports = {
     mainPage, 
     createFolder, 
     appearFolderContent,
     createNestedFolder, 
-    deleteFolder
+    deleteFolder, 
+    generateShareLink
 }
