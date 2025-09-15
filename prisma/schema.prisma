@@ -39,7 +39,7 @@ model Folder {
   parent Folder? @relation("parentFolder", fields: [parentid], references: [folderid]) 
 
   // random string to share folder
-  shareId String?
+  shareId String? @unique
 }
 
 model File {

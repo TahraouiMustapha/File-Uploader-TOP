@@ -176,6 +176,20 @@ async function addFolderShareId(folderid, shareid) {
     })
 }
 
+async function getSharedFolder(shareid) {
+    return await prisma.folder.findUnique({
+        where: {
+            shareId: shareid
+        }, 
+        include: {
+            children: true, 
+            files: true
+        }
+    })
+}
+
+
+
 module.exports = {
     createUser, 
     getUserById,
@@ -190,5 +204,6 @@ module.exports = {
     createFileToFolder, 
     deleteFolder, 
     deleteFile, 
-    addFolderShareId
+    addFolderShareId, 
+    getSharedFolder
 }
