@@ -5,7 +5,7 @@ const { compareAsc, format } = require("date-fns");
 const { getPath, getSize } = require('../services/foldersServices') 
 const FileService = require('../services/FileService')
 
-const {v4: uuidV4} = require('uuid')
+const {v4: uuidV4} = require('uuid');
 
 
 const mainPage = asyncHandler (async (req, res)=> {
@@ -147,12 +147,65 @@ const deleteFolder = asyncHandler(async (req, res)=> {
 const generateShareLink = asyncHandler(async (req, res)=> {
     const { folderid } = req.params;
 
-    const shareid = uuidV4()
-    const folderUpdated = await db.addFolderShareId(Number(folderid), shareid)
+    if(!folderid || isNaN(Number(folderid))) {
+        return res.status(400).json({error: "Invalid folder id"})
+    }
+    const folder = await db.getFolderById(Number(folderid))
+    
+    if(!folder) return res.status(403).json({error: "Folder not found"})
+
+    let shareid = folder.shareId
+    if(!shareid) {
+        shareid = uuidV4();
+        const folderUpdated = await db.addFolderShareId(Number(folderid), shareid)
+    }    
 
     console.log(`share/${shareid}`)
 
     res.send(`/share/${shareid}`)
+})
+
+const getSharedFolder = asyncHandler(async (req, res)=> {
+    const { shareid } = req.params
+    
+    if(!shareid) {
+        return res.status(400).json({error: "Invalid share id"})
+    }
+
+    const sharedFolder = await db.getSharedFolder(shareid)
+    if(!sharedFolder) return res.status(403).json({error: "Folder not found"})
+
+    const folders = sharedFolder?.children.length > 0
+    const files = sharedFolder?.files.length > 0
+
+    let foldersAndFiles = null
+    if(folders || files) {
+        foldersAndFiles = sharedFolder.children.concat(sharedFolder.files)
+                        .sort((a, b)=> compareAsc(a.createdDate, b.createdDate))
+        foldersAndFiles = foldersAndFiles.map(file => (
+            {
+                ...file, 
+                createdDate: format(file.createdDate, 'PPP'),
+                size: file.size ? getSize(file.size) : null
+            }
+        ))                        
+    }
+
+    const actualLink = req.originalUrl
+    let path = await getPath(sharedFolder)
+
+    // make path array like  [ { folderName: 'New Folder', folderHref: '/folders/40' } ]
+    path = path.map(pathObj => ({
+        ...pathObj, 
+        folderHref: `${actualLink}/${pathObj.folderHref.split('/').at(-1)}`
+    }))
+
+    res.render("sharedView",{
+        userFiles: foldersAndFiles, 
+        path: path, 
+        isShared: true, 
+        sharedLink: actualLink 
+    })
 })
 
 
@@ -162,5 +215,6 @@ module.exports = {
     appearFolderContent,
     createNestedFolder, 
     deleteFolder, 
-    generateShareLink
+    generateShareLink, 
+    getSharedFolder
 }

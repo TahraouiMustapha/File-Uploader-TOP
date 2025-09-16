@@ -59,6 +59,9 @@ app.use((req, res, next)=> {
 
 app.get("/", foldersController.mainPage )
 
+// share folder
+app.get("/share/:shareid", foldersController.getSharedFolder )
+
 app.use("/users", authRouter)
 app.use("/folders", folderRouter)
 app.use("/files", filesRouter)

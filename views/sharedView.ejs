@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="/styles/global.css">
+        <link rel="stylesheet" href="/styles/main.css">
+        <title><%=locals.title || 'Public Folder'%></title>
+    </head>
+    <body>
+        <%-include('partials/header')%>
+        <section class="main">
+            <div class="left-side">
+                <p>Folder shared via puclic link</p>
+            </div>
+            <div class="main-content">
+                <div class="navigation-state">
+                    <%if(locals.path) {%>
+                        <p>
+                            <%path.forEach((pathObj, index) => {%>
+                                <%=index > 0 ? '>': null%> <a href=<%=pathObj.folderHref%>> <%=pathObj.folderName%></a>
+                            <%})%>
+                        </p>
+                    <%}%> 
+                </div>
+                <div class="content">
+                        <div class="titles">
+                            <div>Name</div>
+                            <div>Size</div>
+                            <div>Created</div>
+                        </div>
+                            <%if(locals.userFiles) {%>
+                                <div class="files-container">
+                                    <%-include('partials/folderContent')%>
+                                </div>
+                            <%} else {%>
+                                <div class="message-no-files">
+                                    <p>no files or folders to display</p>
+                                </div>
+                            <%}%>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>
