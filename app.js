@@ -13,6 +13,7 @@ const app = express()
 const authRouter = require("./routes/authRouter");
 const filesRouter = require("./routes/filesRouter");
 const folderRouter = require("./routes/foldersRouter");
+const shareRouter = require("./routes/shareRouter")
 
 const foldersController = require("./controllers/foldersController");
 
@@ -59,8 +60,8 @@ app.use((req, res, next)=> {
 
 app.get("/", foldersController.mainPage )
 
-// share folder
-app.get("/share/:shareid", foldersController.getSharedFolder )
+// shared link
+app.use("/share", shareRouter)
 
 app.use("/users", authRouter)
 app.use("/folders", folderRouter)
