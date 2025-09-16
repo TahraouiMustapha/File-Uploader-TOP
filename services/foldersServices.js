@@ -2,12 +2,15 @@ const asyncHandler = require("express-async-handler")
 const db = require("../db/queries")
 
 
-const getPath = asyncHandler(async (folderObj)=> {
+const getPath = asyncHandler(async (folderObj, {isShared = false, folderid = null} = {})=> {
     if(!folderObj) return null
 
-    if(folderObj.parentid) {
+    let stopCase = !folderObj.parentid 
+    if(isShared) stopCase = folderObj.folderid == folderid
+
+    if(!stopCase) {
         const folderParent = await db.getFolderById(folderObj.parentid) 
-        const path = await getPath(folderParent)
+        const path = await getPath(folderParent, {isShared, folderid})
         return path.concat([{
             folderName: folderObj.name, 
             folderHref: `/folders/${folderObj.folderid}`
