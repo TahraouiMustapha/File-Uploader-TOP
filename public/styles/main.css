@@ -22,7 +22,7 @@ a {
 .left-side > .btns-container {
     height: 100%;
     display: grid;
-    grid-template-rows: repeat(3, 40px);
+    grid-template-rows: repeat(4, 40px);
     gap: 6px;
 }
 
@@ -142,7 +142,7 @@ li .size {
 
 .main dialog[open] {
     width: 500px;
-    height: 280px;
+    min-height: 280px;
     position: absolute;
     margin: 0;
     top: 50vh;
@@ -239,7 +239,8 @@ dialog .btns {
     justify-content: space-around;
 }
 
-#cancelDelete {
+#cancelDelete, 
+#cancelSharing {
     padding: 12px 24px;
     border-radius: 8px;
     background-color: #2c2c2c8f;
