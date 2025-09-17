@@ -43,16 +43,23 @@ const getSharedFolder = asyncHandler(async (req, res)=> {
         userFiles: foldersAndFiles, 
         path: path, 
         isShared: true, 
-        sharedLink: actualLink 
+        sharedLink: actualLink
     })
 })
 
 
 const getNestedFolder = asyncHandler(async (req, res)=> {
     const { shareid, folderid } = req.params
+    const { selectedFileId } = req.query
 
     if(!shareid || !folderid || isNaN(Number(folderid))) {
         return res.status(400).json({error: "Invalid ids"})
+    }
+
+    if(selectedFileId) {
+        if(isNaN(Number(selectedFileId))) {
+            return res.status(400).json({error: "Invalid selected file id"})
+        }
     }
 
     // get the folder shared
@@ -88,11 +95,26 @@ const getNestedFolder = asyncHandler(async (req, res)=> {
         folderHref: `${actualLink}/${pathObj.folderHref.split('/').at(-1)}`
     }))
 
+    let clickedFile = null
+    if(selectedFileId) {
+        clickedFile = await db.getFileById(Number(selectedFileId))
+        if(!clickedFile) {
+            return res.status(404).json({error: "File not found"})
+        }
+
+        clickedFile = {
+            ...clickedFile, 
+            size: clickedFile.size ? getSize(clickedFile.size): null,
+            createdDate: format(clickedFile.createdDate, 'PPP   h:m aa' )
+        }
+    }
+
     res.render("sharedView", {
         userFiles: foldersAndFiles, 
         path: path, 
         isShared: true, 
-        sharedLink: actualLink 
+        sharedLink: actualLink , 
+        clickedFile: clickedFile
     })
     
 })

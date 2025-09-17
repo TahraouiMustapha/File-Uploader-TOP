@@ -1,5 +1,5 @@
 <div class="header">
-    <a href="/" class="logo">File Uploader</a>
+    <a href=<%=locals.isShared ? locals.sharedLink : '/' %> class="logo">File Uploader</a>
 
     <%if(locals.user) {%>
         <a href="/users/log-out" class="logOutLogo">

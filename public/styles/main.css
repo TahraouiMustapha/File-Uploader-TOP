@@ -17,6 +17,7 @@ a {
 .left-side {
     border-right: 1px solid var(--border-clr);
     padding: 2rem;
+    color: white;
 }
 
 .left-side > .btns-container {
