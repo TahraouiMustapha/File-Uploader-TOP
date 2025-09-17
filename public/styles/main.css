@@ -196,7 +196,8 @@ input:focus {
     box-shadow: 0 0 10px var(--second-clr);
 }
 
-.dialog-submit-btn {
+.dialog-submit-btn , 
+#copyLink{
     align-self: flex-end;
     padding: 12px 24px;
     border: none;
@@ -208,7 +209,15 @@ input:focus {
     transition: filter 0.2s ease;
 }
 
-.dialog-submit-btn:hover {
+
+#copyLink {
+    margin-top: 8px;
+    padding: 8px 16px;
+    font-size: 0.9em;
+}
+
+.dialog-submit-btn:hover , 
+#copyLink:hover {
     filter: brightness(80%);
 }
 

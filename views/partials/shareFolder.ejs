@@ -8,13 +8,29 @@
             Generate a public link to share the current folder and its contents
         </p>
 
+        <%if(messages.generatedLink) {%>
         <p>
-            <input type="text"  disabled>
+            <input name="sharedLink" type="text" value="<%= messages.generatedLink ?? 'generated link here'%>" disabled/>
+            <button id="copyLink" type="button">Copy Link</button>
+            <script>
+                const copyLinkBtn = document.querySelector('#copyLink')
+                const link = document.querySelector('input[name=\'sharedLink\']');
+
+                copyLinkBtn.addEventListener('click', async ()=> {
+                    try {
+                        await navigator.clipboard.writeText(link.value)
+                        copyLinkBtn.textContent = 'Copied'
+                    } catch (err) {
+                        console.log('Failed to copy :', err)
+                    }
+                })
+            </script>   
         </p>
+        <%}%>
 
         <div class="btns">
             <button id="cancelSharing" type="button">cancel</button>
-            <a class="dialog-submit-btn">Generate a link</a>
+            <a class="dialog-submit-btn" href=<%=`/folders/share/${folderid}`%>>Generate a link</a>
         </div>
     </form>
 </dialog>

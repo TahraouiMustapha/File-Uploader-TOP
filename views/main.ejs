@@ -116,7 +116,14 @@
                 <!-- delete folder dilaog -->
                 <%-include('partials/deleteFolder', { folderid: rootFolder.folderid })%>
                 <!-- generate link of sharing dialog -->
-                <%-include('partials/shareFolder')%>
+                <%-include('partials/shareFolder', { folderid: rootFolder.folderid })%>
+                <%if(messages.generatedLink) {%>
+                    <script>
+                        const shareFolderDialog = document.querySelector('#shareFolderDialog') 
+                        shareFolderDialog.showModal()
+                    </script>
+                <%}%>    
+
             <%}%>
         </section>
 
@@ -141,7 +148,9 @@
 
         // for share folder dilaog
         const shareFolderBtn = document.querySelector('#shareFolderBtn')
-        const shareFolderDialog = document.querySelector('#shareFolderDialog') 
+        if(typeof shareFolderDialog === "undefined") {
+            const shareFolderDialog = document.querySelector('#shareFolderDialog') 
+        }
         const exitShareDialogBtn = document.querySelector('#exitShareDialogBtn')
         const cancelSharing = document.querySelector('#cancelSharing')
         

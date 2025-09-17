@@ -160,9 +160,10 @@ const generateShareLink = asyncHandler(async (req, res)=> {
         const folderUpdated = await db.addFolderShareId(Number(folderid), shareid)
     }    
 
-    console.log(`share/${shareid}`)
+    const generatedLink = `${req.protocol}://${req.get("host")}/share/${shareid}`  
+    req.flash('generatedLink', generatedLink)
 
-    res.send(`/share/${shareid}`)
+    res.redirect(`/folders/${folderid}`)
 })
 
 
