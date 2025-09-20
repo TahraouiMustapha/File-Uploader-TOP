@@ -7,16 +7,45 @@
         <p>
             Generate a public link to share the current folder and its contents
         </p>
+
         <p>
-            <label for="duration">Duration</label>
-            <select name="duration" id="duration">
-                <option value="1">1 hour</option>
-                <option value="4">4 hour</option>
-                <option value="24">1 day</option>
-                <option value="72">3 hour</option>
-                <option value="168">1 week</option>
-            </select>
+            <p class="duration-title">Duration</p>
+            <p class="select-duration">
+                <label class="custom-radio">
+                    <input type="radio" name="duration" value="1" required>
+                    1 hour
+                </label>
+                <label class="custom-radio">
+                    <input type="radio" name="duration" value="4" required>
+                    4 hour
+                </label>
+                <label class="custom-radio">
+                    <input type="radio" name="duration" value="24" required>
+                    1 day
+                </label>
+                <label class="custom-radio">
+                    <input type="radio" name="duration" value="72" required>
+                    3 days
+                </label>
+                <label class="custom-radio">
+                    <input type="radio" name="duration" value="168" required>
+                    1 week
+                </label>
+            </p>
+            <p class="duration-note">Links will expire after the specified duration</p>
         </p>
+
+        <!-- style for duration -->
+        <script>
+            const radios = Array.from(document.querySelectorAll('input[name="duration"]'))
+            radios.forEach(radio=> {
+                radio.addEventListener('change', (e) => {
+                    radios.forEach(radioBtn => radioBtn.parentElement.classList.remove('clickedRadio'))
+                    let btn = e.target
+                    btn.parentElement.classList.add('clickedRadio')
+                })
+            })
+        </script>
 
         <%if(messages.generatedLink) {%>
         <p>

@@ -220,6 +220,7 @@ input:focus {
 .dialog-submit-btn:hover , 
 #copyLink:hover {
     filter: brightness(80%);
+    color: var(--main-clr);
 }
 
 dialog div > button , 
@@ -257,6 +258,61 @@ dialog .btns {
     border: var(--border-clr) 0.5px solid;
 
     margin-top: 32px;
+}
+
+/* style for share dialog */
+
+#shareFolderDialog .select-duration {
+    box-sizing: border-box;
+    height: 42px;
+    display: grid;
+    grid-auto-flow: column;
+    column-gap: 2px;
+
+    background-color: var(--border-clr);
+    border: 1px solid var(--border-clr);
+}
+
+/* hide the radion circle */
+.custom-radio input {
+    opacity: 0;
+    transform: translateY(-15%);
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+}
+
+.custom-radio {
+    height: 40px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8em;
+
+    background-color: hsl(240 5.1% 15%);
+    transition: background-color 0.2s ease;
+}
+
+.custom-radio:hover{
+    background-color: var(--second-clr);
+    color: var(--main-clr);
+}
+
+.clickedRadio {
+    background-color: var(--second-clr);
+    color: var(--main-clr);
+}
+
+.duration-title {
+    margin-bottom: -15px;
+}
+
+.duration-note {
+    margin-top: -15px;
+    font-size: 0.9em;
+    color: var(--txt-clr);
 }
 
 /* style file details container */
