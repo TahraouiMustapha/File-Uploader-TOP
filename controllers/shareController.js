@@ -4,7 +4,7 @@ const db = require('../db/queries')
 const { getPath, getSize } = require('../services/foldersServices')
 const { compareAsc, format } = require('date-fns')
 
-const getSharedFolder = asyncHandler(async (req, res)=> {
+const validateExpiredDate = asyncHandler(async (req, res, next) => {
     const { shareid } = req.params
     
     if(!shareid) {
@@ -13,6 +13,22 @@ const getSharedFolder = asyncHandler(async (req, res)=> {
 
     const sharedFolder = await db.getSharedFolder(shareid)
     if(!sharedFolder) return res.status(404).json({error: "Folder not found"})
+
+    const expiredDate = sharedFolder.expiredDate
+    if(compareAsc(new Date(), expiredDate) >= 0) {
+        // the share expired
+        return res.status(403).json({error: "Access is denied. The resource expired"})
+    }
+
+    req.sharedFolder = sharedFolder
+    next()
+})
+
+const getSharedFolder = [
+    validateExpiredDate,
+    asyncHandler(async (req, res)=> {
+
+    const { sharedFolder } = req
 
     const folders = sharedFolder?.children.length > 0
     const files = sharedFolder?.files.length > 0
@@ -45,15 +61,19 @@ const getSharedFolder = asyncHandler(async (req, res)=> {
         isShared: true, 
         sharedLink: actualLink
     })
-})
+})]
 
 
-const getNestedFolder = asyncHandler(async (req, res)=> {
-    const { shareid, folderid } = req.params
+const getNestedFolder = [
+    validateExpiredDate, 
+    asyncHandler(async (req, res)=> {
+    const { folderid } = req.params
     const { selectedFileId } = req.query
+    // sharedFolder from validation middleware
+    const { sharedFolder:rootFolder } = req
 
-    if(!shareid || !folderid || isNaN(Number(folderid))) {
-        return res.status(400).json({error: "Invalid ids"})
+    if(!folderid || isNaN(Number(folderid))) {
+        return res.status(400).json({error: "Invalid folder id"})
     }
 
     if(selectedFileId) {
@@ -61,10 +81,6 @@ const getNestedFolder = asyncHandler(async (req, res)=> {
             return res.status(400).json({error: "Invalid selected file id"})
         }
     }
-
-    // get the folder shared
-    const rootFolder = await db.getSharedFolder(shareid)
-    if(!rootFolder) return res.status(404).json({error: "Shared folder not found"})
 
     const folderObj = await db.getFolderFiles(Number(folderid))
     if(!folderObj) return res.status(404).json({error: "folder not found"})
@@ -117,7 +133,7 @@ const getNestedFolder = asyncHandler(async (req, res)=> {
         clickedFile: clickedFile
     })
     
-})
+})]
 
 
 module.exports = {
