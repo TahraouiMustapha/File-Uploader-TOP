@@ -176,6 +176,17 @@ async function addFolderShareId(folderid, shareid) {
     })
 }
 
+async function addExpiredDate(folderid, expiredDate) {
+    return await prisma.folder.update({
+        where: {
+            folderid: folderid
+        }, 
+        data : {
+            expiredDate: expiredDate
+        }
+    })
+}
+
 async function getSharedFolder(shareid) {
     return await prisma.folder.findUnique({
         where: {
@@ -205,5 +216,6 @@ module.exports = {
     deleteFolder, 
     deleteFile, 
     addFolderShareId, 
-    getSharedFolder
+    getSharedFolder, 
+    addExpiredDate
 }

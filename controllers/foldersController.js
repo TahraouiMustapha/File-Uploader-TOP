@@ -1,6 +1,6 @@
 const db = require("../db/queries")
 const asyncHandler = require('express-async-handler')
-const { compareAsc, format } = require("date-fns");
+const { compareAsc, format, add } = require("date-fns");
 
 const { getPath, getSize } = require('../services/foldersServices') 
 const FileService = require('../services/FileService')
@@ -144,17 +144,27 @@ const deleteFolder = asyncHandler(async (req, res)=> {
     res.redirect('/') ; 
 })
 
+
 const generateShareLink = asyncHandler(async (req, res)=> {
     const { folderid } = req.params;
+    const { duration } = req.body
 
     if(!folderid || isNaN(Number(folderid))) {
         return res.status(400).json({error: "Invalid folder id"})
     }
+
+    if(!duration || isNaN(Number(duration))) {
+        return res.status(400).json({error: "Invalid duration value"})
+    }
+
     const folder = await db.getFolderById(Number(folderid))
     
     if(!folder) return res.status(403).json({error: "Folder not found"})
 
     let shareid = folder.shareId
+    const expiredDate = add(new Date(), { hours: Number(duration)})
+    await db.addExpiredDate(folder.folderid, expiredDate)
+
     if(!shareid) {
         shareid = uuidV4();
         const folderUpdated = await db.addFolderShareId(Number(folderid), shareid)
