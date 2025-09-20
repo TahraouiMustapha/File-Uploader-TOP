@@ -1,0 +1,75 @@
+<dialog id="shareFileDialog">
+    <form action=<%=`/files/share/${fileid}`%> method="post">
+        <div>
+            <h2 class="title">Share Folder</h2>
+            <button type="button" class="cancelShareFile">X</button>
+        </div>
+        <p>
+            Generate a public link to share the current file 
+        </p>
+
+        <p>
+            <p class="duration-title">Duration</p>
+            <p class="select-duration">
+                <label class="custom-radio">
+                    <input type="radio" name="duration" value="1" required>
+                    1 hour
+                </label>
+                <label class="custom-radio">
+                    <input type="radio" name="duration" value="4" required>
+                    4 hour
+                </label>
+                <label class="custom-radio">
+                    <input type="radio" name="duration" value="24" required>
+                    1 day
+                </label>
+                <label class="custom-radio">
+                    <input type="radio" name="duration" value="72" required>
+                    3 days
+                </label>
+                <label class="custom-radio">
+                    <input type="radio" name="duration" value="168" required>
+                    1 week
+                </label>
+            </p>
+            <p class="duration-note">Links will expire after the specified duration</p>
+        </p>
+
+        <!-- style for duration -->
+        <script>
+            const durationRadios = Array.from(document.querySelectorAll('input[name="duration"]'))
+            durationRadios.forEach(radio=> {
+                radio.addEventListener('change', (e) => {
+                    durationRadios.forEach(radioBtn => radioBtn.parentElement.classList.remove('clickedRadio'))
+                    let btn = e.target
+                    btn.parentElement.classList.add('clickedRadio')
+                })
+            })
+        </script>
+
+        <%if(messages.generatedLink) {%>
+        <p>
+            <input name="sharedLink" type="text" value="<%= messages.generatedLink ?? 'generated link here'%>" disabled/>
+            <button id="copyLink" type="button">Copy Link</button>
+            <script>
+                const copyLinkBtn = document.querySelector('#copyLink')
+                const link = document.querySelector('input[name=\'sharedLink\']');
+
+                copyLinkBtn.addEventListener('click', async ()=> {
+                    try {
+                        await navigator.clipboard.writeText(link.value)
+                        copyLinkBtn.textContent = 'Copied'
+                    } catch (err) {
+                        console.log('Failed to copy :', err)
+                    }
+                })
+            </script>   
+        </p>
+        <%}%>
+
+        <div class="btns">
+            <button class="cancelShareFile" type="button" id="cancelShareFileBtn">cancel</button>
+            <button class="dialog-submit-btn" type="submit">Generate a link</button>
+        </div>
+    </form>
+</dialog>

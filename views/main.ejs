@@ -2,7 +2,7 @@
     <head>
         <link rel="stylesheet" href="/styles/global.css">
         <link rel="stylesheet" href="/styles/main.css">
-        <title>dome</title>
+        <title>File Uploader</title>
     </head>
     <body>
         <%-include('partials/header')%>
@@ -91,6 +91,7 @@
                     </div>
                     <div class="btns">
                         <button class="closeSide">close</button>
+                        <button id="shareFileBtn">share</button>
                         <a href="/files/delete/<%=clickedFile.fileid%>">delete</a>
                         <a href="/files/download/<%=clickedFile.fileid%>" id="downloadBtn">download</a>
                     </div>
@@ -115,7 +116,7 @@
             <%if(locals.rootFolder) {%>
                 <!-- delete folder dilaog -->
                 <%-include('partials/deleteFolder', { folderid: rootFolder.folderid })%>
-                <!-- generate link of sharing dialog -->
+                <!-- dialog for generating a shared folder link -->
                 <%-include('partials/shareFolder', { folderid: rootFolder.folderid })%>
                 <%if(messages.generatedLink) {%>
                     <script>
@@ -123,8 +124,13 @@
                         shareFolderDialog.showModal()
                     </script>
                 <%}%>    
-
+    
             <%}%>
+
+            <!-- dialog for generating a shared file link -->
+            <%if(locals.clickedFile){ %>
+                <%-include('partials/shareFile', {fileid: clickedFile.fileid})%>
+            <%}%>    
         </section>
 
     </body>
@@ -153,6 +159,11 @@
         }
         const exitShareDialogBtn = document.querySelector('#exitShareDialogBtn')
         const cancelSharing = document.querySelector('#cancelSharing')
+
+        // for share file dialog
+        const shareFileBtn = document.querySelector('#shareFileBtn')
+        const shareFileDialog = document.querySelector('#shareFileDialog')
+        const cancelShareFile = Array.from(document.querySelectorAll('.cancelShareFile'))
         
  
         if(newFileBtn){
@@ -217,6 +228,20 @@
             [exitShareDialogBtn, cancelSharing ].forEach(btn => {
                 btn.addEventListener('click', ()=> {
                     shareFolderDialog.close()
+                })
+            })
+        }
+
+        if(shareFileBtn) {
+            shareFileBtn.addEventListener('click', ()=> {
+                shareFileDialog.showModal()
+            })
+        }
+
+        if(cancelShareFile.length > 0) {
+            cancelShareFile.forEach(btn => {
+                btn.addEventListener('click', ()=> {
+                    shareFileDialog.close()
                 })
             })
         }

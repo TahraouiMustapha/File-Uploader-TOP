@@ -57,6 +57,9 @@ model File {
 
   parentFolder Folder? @relation(fields: [folderid], references: [folderid])
   folderid Int?
+// random string to share file
+  shareId String? @unique
+  expiredDate DateTime?
 }
 
 model Session {

@@ -199,6 +199,27 @@ async function getSharedFolder(shareid) {
     })
 }
 
+async function addFileShareId(fileid, shareid) {
+    return await prisma.file.update({
+        where: {
+            fileid: fileid
+        }, 
+        data: {
+            shareId: shareid
+        }
+    })
+}
+
+async function addFileExpiredDate(fileid, expiredDate) {
+    return await prisma.file.update({
+        where: {
+            fileid: fileid
+        }, 
+        data: {
+            expiredDate: expiredDate
+        }
+    })
+}
 
 
 module.exports = {
@@ -215,7 +236,11 @@ module.exports = {
     createFileToFolder, 
     deleteFolder, 
     deleteFile, 
+//  share folder func
     addFolderShareId, 
     getSharedFolder, 
-    addExpiredDate
+    addExpiredDate, 
+// share file func
+    addFileShareId, 
+    addFileExpiredDate
 }
