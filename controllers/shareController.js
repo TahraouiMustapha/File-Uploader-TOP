@@ -4,7 +4,10 @@ const db = require('../db/queries')
 const { getPath, getSize } = require('../services/foldersServices')
 const { compareAsc, format } = require('date-fns')
 
-const validateExpiredDate = asyncHandler(async (req, res, next) => {
+const FileService = require('../services/FileService')
+
+
+const validateFolderExpiredDate = asyncHandler(async (req, res, next) => {
     const { shareid } = req.params
     
     if(!shareid) {
@@ -24,8 +27,27 @@ const validateExpiredDate = asyncHandler(async (req, res, next) => {
     next()
 })
 
+const validateFileExpiredDate = asyncHandler(async (req, res, next)=> {
+    const { shareid } = req.params
+
+    if(!shareid) {
+        return res.status(404).json({error: "Invalid share id"})
+    }
+
+    const sharedFile = await db.getSharedFile(shareid)
+    if(!sharedFile) return res.status(404).json({error: "File not found"})
+
+    const expiredDate = sharedFile.expiredDate;        
+    if(compareAsc(new Date(), expiredDate) >= 0) {
+        return res.status(403).json({error: "Access is denied. The resource expired"})
+    }
+
+    req.sharedFile = sharedFile
+    next()
+})
+
 const getSharedFolder = [
-    validateExpiredDate,
+    validateFolderExpiredDate,
     asyncHandler(async (req, res)=> {
 
     const { sharedFolder } = req
@@ -65,7 +87,7 @@ const getSharedFolder = [
 
 
 const getNestedFolder = [
-    validateExpiredDate, 
+    validateFolderExpiredDate, 
     asyncHandler(async (req, res)=> {
     const { folderid } = req.params
     const { selectedFileId } = req.query
@@ -135,8 +157,26 @@ const getNestedFolder = [
     
 })]
 
+const getSharedFile = [
+    validateFileExpiredDate, 
+    asyncHandler(async (req, res)=> {
+        const sharedFile  = req.sharedFile
+        
+        // download the file from supabase storage
+        const fileData = await FileService.download(sharedFile.path)
+        
+        const fileArrayBuffer = await fileData.arrayBuffer()
+        const fileBuffer = Buffer.from(fileArrayBuffer)
+
+        res.set("Content-Type", sharedFile.mimetype )
+        res.set("Content-Disposition", "inline;")
+
+        res.send(fileBuffer)
+})]
+
 
 module.exports = {
     getSharedFolder, 
-    getNestedFolder 
+    getNestedFolder, 
+    getSharedFile 
 }

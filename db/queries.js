@@ -221,6 +221,14 @@ async function addFileExpiredDate(fileid, expiredDate) {
     })
 }
 
+async function getSharedFile(shareid) {
+    return await prisma.file.findUnique({
+        where : {
+            shareId: shareid
+        }
+    })
+}
+
 
 module.exports = {
     createUser, 
@@ -242,5 +250,6 @@ module.exports = {
     addExpiredDate, 
 // share file func
     addFileShareId, 
-    addFileExpiredDate
+    addFileExpiredDate, 
+    getSharedFile
 }
