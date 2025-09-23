@@ -4,6 +4,8 @@ const db = require('../db/queries')
 const path = require('path')
 
 const FileService = require('../services/FileService')
+const { v4 } = require('uuid')
+const { add } = require("date-fns")
 
 
 function fileObjMaker (fileObj, userid) {
@@ -105,10 +107,44 @@ const deleteFile = asyncHandler(async (req, res)=> {
     res.redirect(path)
 })
 
+const generateShareLink = asyncHandler(async(req, res)=> {
+    const { fileid } = req.params
+    const { duration } = req.body
+
+    if(!fileid || isNaN(Number(fileid))) {
+        return res.status(400).json({error: "Invalid file id"})
+    }
+
+    if(!duration || isNaN(Number(duration))) {
+        return res.status(400).json({error: "Invalid duration value"})
+    }
+
+    const fileObj = await db.getFileById(Number(fileid))
+    if(!fileObj) {
+        return res.status(404).json({error: "File not found"})
+    }
+    
+    let shareid = fileObj.shareId
+    let expiredDate = add(new Date(), {hours: Number(duration)})
+    console.log('expdate',expiredDate)
+    if(!shareid) {
+        shareid = v4() 
+        await db.addFileShareId(fileObj.fileid, shareid)
+    } 
+
+    await db.addFileExpiredDate(fileObj.fileid, expiredDate)
+
+    const generatedLink = `${req.protocol}://${req.get("host")}/share/${shareid}/file/${fileObj.fileid}`  
+    req.flash('generatedFileLink', generatedLink)
+    
+    res.redirect(`/folders/${fileObj.folderid}?selectedFileId=${fileObj.fileid}`)
+})  
+
 module.exports = {
     createFile, 
     createFileToFolder,
     viewFileDetails, 
     downlaodFile, 
-    deleteFile
+    deleteFile, 
+    generateShareLink
 }

@@ -130,6 +130,12 @@
             <!-- dialog for generating a shared file link -->
             <%if(locals.clickedFile){ %>
                 <%-include('partials/shareFile', {fileid: clickedFile.fileid})%>
+                <%if(messages.generatedFileLink) {%>
+                    <script>
+                        const shareFileDialog = document.querySelector('#shareFileDialog')
+                        shareFileDialog.showModal()
+                    </script>
+                <%}%>                    
             <%}%>    
         </section>
 
@@ -162,7 +168,9 @@
 
         // for share file dialog
         const shareFileBtn = document.querySelector('#shareFileBtn')
-        const shareFileDialog = document.querySelector('#shareFileDialog')
+        if(typeof shareFileDialog === "undefined" ) {
+            const shareFileDialog = document.querySelector('#shareFileDialog')
+        }
         const cancelShareFile = Array.from(document.querySelectorAll('.cancelShareFile'))
         
  

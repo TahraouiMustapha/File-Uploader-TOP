@@ -17,4 +17,6 @@ filesRouter.get('/download/:fileid', filesController.downlaodFile )
 
 filesRouter.get('/delete/:fileid', filesController.deleteFile )
 
+filesRouter.post('/share/:fileid', filesController.generateShareLink )
+
 module.exports = filesRouter;

@@ -1,7 +1,7 @@
-<dialog id="shareFileDialog">
+<dialog id="shareFileDialog" >
     <form action=<%=`/files/share/${fileid}`%> method="post">
         <div>
-            <h2 class="title">Share Folder</h2>
+            <h2 class="title">Share File</h2>
             <button type="button" class="cancelShareFile">X</button>
         </div>
         <p>
@@ -47,9 +47,9 @@
             })
         </script>
 
-        <%if(messages.generatedLink) {%>
+        <%if(messages.generatedFileLink) {%>
         <p>
-            <input name="sharedLink" type="text" value="<%= messages.generatedLink ?? 'generated link here'%>" disabled/>
+            <input name="sharedLink" type="text" value="<%= messages.generatedFileLink ?? 'generated link here'%>" disabled/>
             <button id="copyLink" type="button">Copy Link</button>
             <script>
                 const copyLinkBtn = document.querySelector('#copyLink')
