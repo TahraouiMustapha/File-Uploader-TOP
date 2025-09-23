@@ -126,7 +126,6 @@ const generateShareLink = asyncHandler(async(req, res)=> {
     
     let shareid = fileObj.shareId
     let expiredDate = add(new Date(), {hours: Number(duration)})
-    console.log('expdate',expiredDate)
     if(!shareid) {
         shareid = v4() 
         await db.addFileShareId(fileObj.fileid, shareid)
@@ -137,7 +136,11 @@ const generateShareLink = asyncHandler(async(req, res)=> {
     const generatedLink = `${req.protocol}://${req.get("host")}/share/${shareid}/file/${fileObj.fileid}`  
     req.flash('generatedFileLink', generatedLink)
     
-    res.redirect(`/folders/${fileObj.folderid}?selectedFileId=${fileObj.fileid}`)
+    const redirectedPath = fileObj.folderid 
+    ? `/folders/${fileObj.folderid}?selectedFileId=${fileObj.fileid}`
+    : `/?selectedFileId=${fileObj.fileid}`;
+
+    res.redirect(redirectedPath)
 })  
 
 module.exports = {
