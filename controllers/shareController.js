@@ -52,7 +52,7 @@ const getSharedFolder = [
     // make path array like  [ { folderName: 'New Folder', folderHref: '/folders/40' } ]
     path = path.map(pathObj => ({
         ...pathObj, 
-        folderHref: `${actualLink}/${pathObj.folderHref.split('/').at(-1)}`
+        folderHref: `${actualLink}/folder/${pathObj.folderHref.split('/').at(-1)}`
     }))
 
     res.render("sharedView",{
@@ -108,7 +108,7 @@ const getNestedFolder = [
     // make path array like  [ { folderName: 'New Folder', folderHref: '/folders/40' } ]
     path = path.map(pathObj => ({
         ...pathObj, 
-        folderHref: `${actualLink}/${pathObj.folderHref.split('/').at(-1)}`
+        folderHref: `${actualLink}/folder/${pathObj.folderHref.split('/').at(-1)}`
     }))
 
     let clickedFile = null

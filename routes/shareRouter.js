@@ -4,7 +4,7 @@ const shareRouter = Router()
 const shareController = require('../controllers/shareController')
 
 
-shareRouter.get('/:shareid/:folderid', shareController.getNestedFolder )
+shareRouter.get('/:shareid/folder/:folderid', shareController.getNestedFolder )
 
 shareRouter.get("/:shareid", shareController.getSharedFolder )
 
