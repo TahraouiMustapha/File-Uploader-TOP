@@ -5,9 +5,7 @@ const path = require('path')
 
 const FileService = require('../services/FileService');
 
-(async()=> {
-    const { v4 } = await import('uuid')
-})()
+const { randomUUID } = require('crypto');
 const { add } = require("date-fns")
 
 
@@ -130,7 +128,7 @@ const generateShareLink = asyncHandler(async(req, res)=> {
     let shareid = fileObj.shareId
     let expiredDate = add(new Date(), {hours: Number(duration)})
     if(!shareid) {
-        shareid = v4() 
+        shareid = randomUUID() 
         await db.addFileShareId(fileObj.fileid, shareid)
     } 
 

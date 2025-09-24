@@ -5,9 +5,7 @@ const { compareAsc, format, add } = require("date-fns");
 const { getPath, getSize } = require('../services/foldersServices') 
 const FileService = require('../services/FileService');
 
-(async()=> {
-    const {v4: uuidV4} = await import('uuid');
-})()
+const { randomUUID } = require('crypto');
 
 
 const mainPage = asyncHandler (async (req, res)=> {
@@ -168,7 +166,7 @@ const generateShareLink = asyncHandler(async (req, res)=> {
     await db.addExpiredDate(folder.folderid, expiredDate)
 
     if(!shareid) {
-        shareid = uuidV4();
+        shareid = randomUUID();
         const folderUpdated = await db.addFolderShareId(Number(folderid), shareid)
     }    
 

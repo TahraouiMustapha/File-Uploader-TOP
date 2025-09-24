@@ -1,7 +1,5 @@
 const supabase = require('../supabase/supabase');
-(async () => {
-  const { v4 } = await import('uuid');
-})();
+const { randomUUID } = require('crypto');
 const { decode } = require('base64-arraybuffer')
 
 
@@ -10,7 +8,7 @@ class FileService {
         try {
 
             const fileExt = file.originalname.split('.').pop()
-            const filename = `${userid}/${v4()}.${fileExt}`
+            const filename = `${userid}/${randomUUID()}.${fileExt}`
 
             // convert to ArrayBuffer that supabase expected
             const fileBased64 = decode(file.buffer.toString("base64"))
