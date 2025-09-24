@@ -1,5 +1,7 @@
-const supabase = require('../supabase/supabase')
-const { v4 } = require('uuid')
+const supabase = require('../supabase/supabase');
+(async () => {
+  const { v4 } = await import('uuid');
+})();
 const { decode } = require('base64-arraybuffer')
 
 

@@ -3,8 +3,11 @@ const db = require('../db/queries')
 
 const path = require('path')
 
-const FileService = require('../services/FileService')
-const { v4 } = require('uuid')
+const FileService = require('../services/FileService');
+
+(async()=> {
+    const { v4 } = await import('uuid')
+})()
 const { add } = require("date-fns")
 
 

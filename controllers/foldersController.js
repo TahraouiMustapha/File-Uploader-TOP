@@ -3,9 +3,11 @@ const asyncHandler = require('express-async-handler')
 const { compareAsc, format, add } = require("date-fns");
 
 const { getPath, getSize } = require('../services/foldersServices') 
-const FileService = require('../services/FileService')
+const FileService = require('../services/FileService');
 
-const {v4: uuidV4} = require('uuid');
+(async()=> {
+    const {v4: uuidV4} = await import('uuid');
+})()
 
 
 const mainPage = asyncHandler (async (req, res)=> {
