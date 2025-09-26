@@ -7,6 +7,7 @@ const passport = require("./auth/passport")
 const flash = require("express-flash")
 require("dotenv").config()
 const compression = require('compression')
+const helmet = require('helmet')
 
 const app = express()
 
@@ -24,6 +25,11 @@ app.set("view engine", "ejs")
 app.use(flash())
 
 // compress responses
+app.use(helmet())
+app.use((req, res, next)=> {
+    res.removeHeader('Content-Security-Policy')
+    next()
+})
 app.use(compression({
     filter: (req, res) => {
         const contentType = res.getHeader('Content-Type')
