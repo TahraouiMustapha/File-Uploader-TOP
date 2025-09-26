@@ -9,15 +9,9 @@ const { randomUUID } = require('crypto');
 
 
 const mainPage = asyncHandler (async (req, res)=> {
-    const {user} = req;
+    const { user } = req;
     const { selectedFileId } = req.query
 
-    
-    if(!user) {
-        return res.render("sign-up", {
-            title: 'Sign Up'
-        })
-    }
     
     files = await db.getUserFiles(user.userid)
     files.sort((a, b)=> compareAsc(a.createdDate, b.createdDate));
@@ -63,8 +57,15 @@ const createFolder = asyncHandler( async (req, res) => {
 const appearFolderContent = asyncHandler(async (req, res)=> {
     const { folderid } = req.params;
     const { selectedFileId } = req.query
+
+    if(!folderid || isNaN(Number(folderid))) {
+        return res.status(400).json({error: "Invalid folder id"})
+    }
     
     const folderObj = await db.getFolderFiles(Number(folderid))
+    
+    if(!folderObj) return res.status(400).json({ error: "Folder not found"})
+
     const newFolderHref = `/folders/${folderObj.folderid}/new-folder`;
     const newFileHref = `/files/${folderObj.folderid}/new-file`;
     
@@ -112,6 +113,10 @@ const createNestedFolder = asyncHandler(async (req, res)=> {
     const { userid } = req.user;
     let { folderName } = req.body;
 
+    if(!folderid || isNaN(Number(folderid))) {
+        return res.status(400).json({error: "Invalid folder id"})
+    }
+
     if (folderName.trim() == '') folderName = 'New Folder';
 
     await db.createNestedFolder(Number(folderid), Number(userid), folderName);
@@ -124,7 +129,13 @@ const createNestedFolder = asyncHandler(async (req, res)=> {
 const deleteFolder = asyncHandler(async (req, res)=> {
     const { folderid } = req.params;
 
+    if(!folderid || isNaN(Number(folderid))) {
+        return res.status(400).json({error: "Invalid folder id"})
+    }
+
     const folder = await db.getFolderFiles(Number(folderid))
+
+    if(!folder) return res.status(400).json({error: "Folder not found"})
 
     if(folder.files.length > 0){    
         // delete related files from supabase storage

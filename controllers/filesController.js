@@ -6,7 +6,7 @@ const path = require('path')
 const FileService = require('../services/FileService');
 
 const { randomUUID } = require('crypto');
-const { add } = require("date-fns")
+const { add } = require("date-fns");
 
 
 function fileObjMaker (fileObj, userid) {
@@ -44,6 +44,10 @@ const createFileToFolder = asyncHandler(async(req, res)=> {
     const { file } = req;
     const { folderid } = req.params;
 
+    if(!folderid || isNaN(Number(folderid))) {
+        return res.status(400).json({error: "Invalid folder id"})
+    }
+
     const path = `/folders/${folderid}`;
 
     if(!file) {
@@ -63,7 +67,13 @@ const createFileToFolder = asyncHandler(async(req, res)=> {
 const viewFileDetails = asyncHandler(async (req, res)=> {
     const { fileid } = req.params
 
+    if(!fileid || isNaN(Number(fileid))) {
+        return res.status(400).json({error: "Invalid file id"})
+    }
+
     const fileObj = await db.getFileById(Number(fileid))
+
+    if(!fileObj) return res.status(404).json({ error: "File not found"})
 
     const path = fileObj.folderid 
                 ? `/folders/${fileObj.folderid}?selectedFileId=${fileObj.fileid}`
@@ -76,7 +86,12 @@ const viewFileDetails = asyncHandler(async (req, res)=> {
 const downlaodFile = asyncHandler(async(req, res) => {
     const { fileid } = req.params;
 
+    if(!fileid || isNaN(Number(fileid))) {
+        return res.status(400).json({error: "Invalid file id"})
+    }
+
     const fileObj = await db.getFileById(Number(fileid))
+    if(!fileObj) return res.status(404).json({ error: "File not found"})
 
     // download the file from supabase storage
     const filedata = await FileService.download(fileObj.path)
@@ -94,7 +109,12 @@ const downlaodFile = asyncHandler(async(req, res) => {
 const deleteFile = asyncHandler(async (req, res)=> {
     const { fileid } = req.params
 
+    if(!fileid || isNaN(Number(fileid))) {
+        return res.status(400).json({error: "Invalid file id"})
+    }
+
     const fileObj = await db.getFileById(Number(fileid))
+    if(!fileObj) return res.status(404).json({ error: "File not found"})
 
     // delete the file from supabase storage
     await FileService.deleteFile(fileObj.path)
