@@ -58,14 +58,14 @@ app.use((req, res, next)=> {
   next();
 })
 
-app.get("/", foldersController.mainPage )
+app.get("/",isAuthenticated , foldersController.mainPage )
 
 // shared link
 app.use("/share", shareRouter)
 
 app.use("/users", authRouter)
-app.use("/folders", folderRouter)
-app.use("/files", filesRouter)
+app.use("/folders", isAuthenticated, folderRouter)
+app.use("/files", isAuthenticated ,filesRouter)
 
 app.use((err, req, res, next)=> {
     if(err.code == 'P2002') {
@@ -90,3 +90,11 @@ app.listen(PORT, (err)=> {
     }  
     console.log(`listening on Port : ${PORT}`)
 })
+
+function isAuthenticated (req, res, next) {
+    if(!req.isAuthenticated()) {
+        return res.render('log-in')
+    }
+
+    next()
+}

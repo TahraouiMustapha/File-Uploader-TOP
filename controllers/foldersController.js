@@ -12,6 +12,7 @@ const mainPage = asyncHandler (async (req, res)=> {
     const {user} = req;
     const { selectedFileId } = req.query
 
+    
     if(!user) {
         return res.render("sign-up", {
             title: 'Sign Up'
