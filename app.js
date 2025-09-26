@@ -6,6 +6,7 @@ const { PrismaClient } = require('@prisma/client');
 const passport = require("./auth/passport")
 const flash = require("express-flash")
 require("dotenv").config()
+const compression = require('compression')
 
 const app = express()
 
@@ -21,6 +22,17 @@ const foldersController = require("./controllers/foldersController");
 app.set("views", path.join(__dirname, "views"))
 app.set("view engine", "ejs")
 app.use(flash())
+
+// compress responses
+app.use(compression({
+    filter: (req, res) => {
+        const contentType = res.getHeader('Content-Type')
+        if( contentType && /image|video|audio|zip|pdf/.test(contentType) ) {
+            return false
+        }    
+        return compression.filter(req, res);    
+    }
+}))
 
 // serving static files
 const assetsPath = path.join(__dirname, "public")
