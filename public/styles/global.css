@@ -1,98 +1,41 @@
 @font-face {
-    font-family: 'Roboto';
-    src: url('/fonts/Roboto-VariableFont_wdth\,wght.ttf') format('truetype');
-
+    font-family: 'Poppins';
+    src: url('/fonts/poppins-latin-400-normal.ttf') format('truetype');
+    font-weight: 400;
     font-size: normal;
-    font-weight: normal;  
+
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src :url('/fonts/poppins-latin-700-normal.ttf') format('truetype')   ;   
+    font-size: normal;
+    font-weight: 700;
 }
 
 * {
     margin: 0;
     padding: 0;
-    font-family: 'Roboto';
-    --main-clr: #0a0a0c;
-    --txt-clr: rgb(204, 204, 209);
-    --second-clr: #40a9ff6b;
-    --border-clr: #b4b4b4be;
+    font-family: 'Poppins', sans-serif;
+
+    /* fonts */
+    --font-sz-h1: 34px;
+    --font-sz-h2: 24px;
+    --font-sz-h3: 20px;
+
+    --font-sz-subtitle: 14px;
+    --font-sz-caption: 12px;
+    --font-sz-btn: 14px;
+
+    /* Colors */
+    --brand-clr: #FA7275;
+    --white-clr: #ffffff;
+
     box-sizing: border-box;
 }
 
 body {
-    background-color: var(--main-clr);
     min-height: 100vh;
     width: 100vw;
-
-    display: flex;
-    flex-direction: column;
 }
 
-ul {
-    list-style-type: none;
-}
-
-/* header styles */
-.header {
-    height: 10vh;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 2rem;
-    border-bottom: 1px solid var(--border-clr);
-}
-
-.header a {
-    text-decoration: none;
-    color: var(--txt-clr);
-} 
-
-.logo {
-    font-size: 2.5em;
-    font-weight: 600;
-    letter-spacing: 2px;
-}
-
-.authBtns {
-    display: flex;
-    gap: 32px;
-}
-
-.authBtns  a {
-    padding: 0.8rem;
-    background-color: #2c2c2c8f;
-    border: var(--border-clr) 0.5px solid;
-}
-
-.authBtns a:hover {
-    background-color: var(--second-clr);
-    border: var(--second-clr) 0.5px solid;
-    box-shadow: 0 0 15px var(--second-clr);
-}
-
-.logOutLogo {
-    position: relative;
-}
-
-.logOutLogo svg{
-    width: 32;
-    fill: #434343;
-    transition: fill 0.2s ease;
-}
-
-.logOutLogo svg:hover {
-    fill: var(--second-clr)
-}
-
-.tooltip {
-    padding: 6px;
-    width: auto;
-    height: auto;
-    background-color: var(--border-clr);
-    color: #0a0a0c;
-    border-radius: 8px;
-    position: absolute;
-    transform: translate(-25%, 20%);
-
-    opacity: 0;
-    transition: opacity 0.2s ease;
-}
