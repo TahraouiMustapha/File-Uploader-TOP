@@ -6,33 +6,63 @@
     </head>
 
     <body>
-        <%-include('partials/header')%>
+
 
         <section class="main">
-            <div class="container">
-                <form method="post" action="/users/sign-up">
-                    <h2 class="title">Sign Up</h2>
-                    <p>
-                        Already have an account ? <a href="/users/log-in">Log in</a>
-                    </p>
-                    <p>
-                        <label for="username">Uersname*</label>
-                        <input type="email" id="username" name="username">
-                    </p>
-                    <p>
-                        <label for="password">Password*</label>
-                        <input type="password" id="password" name="password">
-                    </p>
-                    <p>
-                        <label for="confirmPassword">Confirm Password*</label>
-                        <input type="password" id="confirmPassword" name="confirmPassword">
-                    </p>
-                    <%if(locals.errors) {%>
-                        <%-include("partials/errors")%>
-                    <%}%>
-                    <button type="submit" class="formBtn">Create Account</button>
-                </form>
+            <aside class="intro-container">
+                <div class="logo-container">
+                    <div class="logo">
+                        <img src="/assets/icons/logo-full.svg" alt="logo">
+                    </div>
+                </div>
+
+                <div class="intro">
+                    <p class="title">Manage your files the best way</p>
+                    <p class="caption">Awesome , we've created the perfect project to show you how good we are at our work</p>
+                </div>
+
+                <div class="big-files-logo">
+                    <img src="/assets/images/files.png" alt="big icon"></img>
+                </div>
+            </aside>
+
+            <div class="auth-container">
+                <div class="auth">
+                    <form method="post" action="/users/sign-up">
+                        <h2 class="title">Create Account</h2>
+                        <p>
+                            <label for="username">Uersname*</label>
+                            <input type="email" 
+                            id="username" 
+                            name="username"
+                            placeholder="Enter your email">
+                        </p>
+                        <p>
+                            <label for="password">Password*</label>
+                            <input type="password" 
+                            id="password" 
+                            name="password"
+                            placeholder="Enter your password">
+                        </p>
+                        <p>
+                            <label for="confirmPassword">Confirm Password*</label>
+                            <input type="password" 
+                            id="confirmPassword" 
+                            name="confirmPassword"
+                            placeholder="Confirm your password">
+                        </p>
+                        <%if(locals.errors) {%>
+                            <%-include("partials/errors")%>
+                        <%}%>
+                        <button type="submit" class="formBtn">Create Account</button>
+                        <p>
+                            Already have an account ? <a href="/users/log-in">Log in</a>
+                        </p>
+                    </form>
+                </div>
             </div>
-        </div>
+        </section>
+
+        
     </body>
 </html>
