@@ -5,7 +5,10 @@
         <title><%=locals.title || "Log In"%></title>
     </head>
     <body>  
-        
+        <%const missingCred = messages?.error?.find(err => err === 'Missing credentials')%>
+        <%const incorrectPass = messages?.error?.find(err => err === 'Incorrect password')%>
+        <%const incorrectUser = messages?.error?.find(err => err === 'Incorrect username')%>
+
         <section class="main">
             <aside class="intro-container">
                 <div class="logo-container">
@@ -35,6 +38,13 @@
                             name="username" 
                             placeholder="Enter your email">
                         </p>
+                         <%if(incorrectUser || missingCred ) {%>
+                            <script>
+                                const emailP = document.querySelector('form p:has(input[name=\'username\'])') 
+                                emailP.classList.add('invalid-input')
+                            </script>
+                         <%}%>   
+
                         <p>
                             <label for="password">Password</label>
                             <input type="password" 
@@ -42,6 +52,13 @@
                             name="password"
                             placeholder="Enter your password">
                         </p>
+
+                        <%if(incorrectPass || missingCred ) {%>
+                            <script>
+                                const passwordP= document.querySelector('form p:has(input[name=\'password\'])') 
+                                passwordP.classList.add('invalid-input')
+                            </script>
+                         <%}%> 
                         <%if(messages.error) {%>
                             <%-include('partials/errors')%>
                         <%}%>
@@ -53,6 +70,17 @@
             </div>
             </div>
         </section>
+
+        <%if(messages.error) {%>
+            <script>
+                const inputs = Array.from(document.querySelectorAll('.auth input'))
+                inputs.forEach(input => {
+                    input.addEventListener('input', (e)=> {
+                        e.target.parentElement.classList.remove('invalid-input')
+                    })
+                })
+            </script>
+        <%}%>
 
     </body>
 </html>

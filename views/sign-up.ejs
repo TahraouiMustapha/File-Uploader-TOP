@@ -84,6 +84,7 @@
             </div>
         </section>
 
+        <%if(locals.errors){%>
         <script>
             const inputs = Array.from(document.querySelectorAll('.auth form input'));
             
@@ -93,6 +94,7 @@
                 })
             })
         </script>
+        <%}%>
 
     </body>
 </html>
