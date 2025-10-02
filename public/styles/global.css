@@ -13,22 +13,30 @@
     font-weight: 700;
 }
 
+@font-face {
+    font-family: 'Poppins';
+    src: url('/fonts/poppins-latin-600-normal.ttf') format('truetype');
+    font-size: normal;
+    font-weight: 600;
+}
+
 * {
     margin: 0;
     padding: 0;
     font-family: 'Poppins', sans-serif;
 
     /* fonts */
-    --font-sz-h1: 34px;
+    --font-sz-h1: 40px;
     --font-sz-h2: 24px;
     --font-sz-h3: 20px;
 
     --font-sz-subtitle: 14px;
     --font-sz-caption: 12px;
-    --font-sz-btn: 14px;
+    --font-sz-btn: 16px;
 
     /* Colors */
     --brand-clr: #FA7275;
+    --brand-2-clr: #EA6365;
     --white-clr: #ffffff;
 
     box-sizing: border-box;
