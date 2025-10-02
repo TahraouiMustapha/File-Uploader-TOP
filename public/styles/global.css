@@ -59,4 +59,36 @@ ul.errors {
     border: 1px solid var(--err-clr);
 }
 
+/* for header */
+
+.header {
+    display: flex;
+    padding: 1rem 1.8rem ;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header .logo img {
+    width: 160px;
+}
+
+.header .logOutLogo img{
+    width: 32px;
+}
+
+.tooltip {
+    padding: 6px;
+    width: auto;
+    height: auto;
+    background-color: var(--brand-clr);
+    color: var(--white-clr);
+    border-radius: 8px;
+    position: absolute;
+    transform: translate(-25%, 20%);
+
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+
 
