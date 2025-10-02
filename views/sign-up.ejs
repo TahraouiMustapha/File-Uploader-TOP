@@ -6,7 +6,9 @@
     </head>
 
     <body>
-
+        <%const username = locals.errors?.find(field => field.path === 'username')%>
+        <%const password = locals.errors?.find(field => field.path === 'password')%>
+        <%const confirmPass = locals.errors?.find(field => field.path === 'confirmPassword')%>
 
         <section class="main">
             <aside class="intro-container">
@@ -37,6 +39,12 @@
                             name="username"
                             placeholder="Enter your email">
                         </p>
+                        <%if(username){ %>
+                            <script>
+                                const emailP = document.querySelector('form p:has(input[name=\'username\'])') 
+                                emailP.classList.add('invalid-input')
+                            </script>
+                        <%}%>
                         <p>
                             <label for="password">Password*</label>
                             <input type="password" 
@@ -44,6 +52,7 @@
                             name="password"
                             placeholder="Enter your password">
                         </p>
+
                         <p>
                             <label for="confirmPassword">Confirm Password*</label>
                             <input type="password" 
@@ -51,6 +60,18 @@
                             name="confirmPassword"
                             placeholder="Confirm your password">
                         </p>
+
+                        <%if(confirmPass || password) {%>
+                            <script>
+                                const passwordP = document.querySelector('form p:has(input[name=\'password\'])') 
+                                const confirmPass = document.querySelector('form p:has(input[name=\'confirmPassword\'])') 
+
+                                confirmPass.classList.add('invalid-input')
+                                passwordP.classList.add('invalid-input')
+
+                            </script>
+                        <%}%>
+
                         <%if(locals.errors) {%>
                             <%-include("partials/errors")%>
                         <%}%>
@@ -63,6 +84,15 @@
             </div>
         </section>
 
-        
+        <script>
+            const inputs = Array.from(document.querySelectorAll('.auth form input'));
+            
+            inputs.forEach(input=> {
+                input.addEventListener('input', (e)=> {
+                    e.target.parentElement.classList.remove('invalid-input')
+                })
+            })
+        </script>
+
     </body>
 </html>

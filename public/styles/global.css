@@ -38,6 +38,7 @@
     --brand-clr: #FA7275;
     --brand-2-clr: #EA6365;
     --white-clr: #ffffff;
+    --err-clr: #B80000;
 
     box-sizing: border-box;
 }
@@ -46,4 +47,16 @@ body {
     min-height: 100vh;
     width: 100vw;
 }
+
+/* for forms errors */
+ul.errors {
+    list-style: none;
+    color: var(--err-clr);
+    font-size: 13px;
+}
+
+.invalid-input {
+    border: 1px solid var(--err-clr);
+}
+
 
