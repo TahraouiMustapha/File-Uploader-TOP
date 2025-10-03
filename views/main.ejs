@@ -6,8 +6,40 @@
     </head>
     <body>
         <%-include('partials/header')%>
-        
+
         <section class="main">
+            <nav class="left-side">
+                <div class="nav-btns">
+
+                    <div id="newFolderBtn" class="btn">
+                        <img src="/assets/icons/documents.svg" alt="new-folder">
+                        New Folder
+                    </div>
+
+                    <div id="newFileBtn" class="btn">
+                        <img src="/assets/icons/file.svg" alt="new-file">
+                        New File
+                    </div>
+
+                </div>
+                
+                <div class="about">
+                    <div class="big-files-logo">
+                        <img src="/assets/images/files-2.png" alt="big-files">
+                    </div>
+                    <div class="info">
+                        info
+                    </div>
+                </div>
+
+            </nav>
+
+            <div class="main-content">main</div>
+        </section>
+
+        
+
+        <!-- <section class="main">
             <div class="left-side">
                 <div class="btns-container">
                     <div id="newFolderBtn" class="btn">
@@ -52,7 +84,7 @@
                     </div>
                         <%if(userFiles) {%>
                             <div class="files-container">
-                                <%-include('partials/folderContent')%>
+                                <%-//include('partials/folderContent')%>
                             </div>
                         <%} else {%>
                             <div class="message-no-files">
@@ -64,7 +96,7 @@
                             </div>
                         <%}%>
                 </div>
-            </div>
+            </div> -->
 
     
             <!-- aside to appear file info -->
