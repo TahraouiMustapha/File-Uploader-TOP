@@ -50,6 +50,7 @@ body {
 }
 
 /* for forms errors */
+
 ul.errors {
     list-style: none;
     color: var(--err-clr);

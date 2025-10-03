@@ -40,7 +40,37 @@
 
             </nav>
 
-            <div class="main-content">main</div>
+            <div class="main-content">
+                <div class="navigation-state">
+                    <%if(locals.path) {%>
+                        <p>
+                            <a href="/"><%=user.username%></a> 
+                            <%path.forEach(pathObj => {%>
+                                <%='>'%> <a href=<%=pathObj.folderHref%>> <%=pathObj.folderName%></a>
+                            <%})%>
+                        </p>
+                    <%} else {%>
+                            <p><a href="/"><%=user.username%></a></p>
+                    <%}%> 
+                </div>
+
+                <%if(!locals.rootFolder){ %>
+                    <div class="available-storage">storage</div>
+                <%}%>
+                <%if(userFiles) {%>
+                       <div class="files-container">
+                           <%-include('partials/folderContent')%>
+                       </div>
+                   <%} else {%>
+                       <div class="message-no-files">
+                           <%if(locals.rootFolder) { %>
+                               <p>no files or folders to display</p>
+                           <%} else { %>
+                               <p>Create a new folder to get started</p>
+                           <%}%>
+                       </div>
+                   <%}%>
+            </div>
         </section>
 
         

@@ -90,15 +90,29 @@ body {
     color: var(--brand-2-clr);
 }
 
-/* just for seeing */
-
-
 /* main-content style */
 .main-content {
     background-color: var(--main-content-clr);
     margin-right: 32px;
+    padding: 1rem;
 
     border-radius: 32px;
+    overflow: hidden;
+
+    display: grid;
+    grid-template-rows: 5% 25% 1fr;
+    gap: 32px;
+}
+
+.navigation-state p a:first-child {
+    color: var(--brand-2-clr);
+}
+
+
+
+/* just for seeing */
+.main-content > * {
+    border: 1px solid black;
 }
 
 
