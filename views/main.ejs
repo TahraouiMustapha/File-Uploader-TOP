@@ -10,6 +10,10 @@
         <section class="main">
             <nav class="left-side">
                 <div class="nav-btns">
+                    <a href=<%=locals.isShared ? locals.sharedLink : '/' %> class="btn hoveredBtn">
+                        <img src="/assets/icons/home.svg" alt="home">
+                        Home
+                    </a>
 
                     <div id="newFolderBtn" class="btn">
                         <img src="/assets/icons/documents.svg" alt="new-folder">
@@ -27,8 +31,10 @@
                     <div class="big-files-logo">
                         <img src="/assets/images/files-2.png" alt="big-files">
                     </div>
+
                     <div class="info">
-                        info
+                        <span>Created by </span><a href="https://github.com/TahraouiMustapha" target="_blank">Tahraoui mustapha</a> 
+                        <span>Design inspired by</span> <a href="https://www.youtube.com/watch?v=lie0cr3wESQ&t=178s" target="_blank">Js Mastery</a>
                     </div>
                 </div>
 

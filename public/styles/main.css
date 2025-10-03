@@ -59,7 +59,7 @@ body {
 }
 
 .nav-btns .btn img {
-    width: 40px;
+    width: 32px;
 }
 
 .about {
@@ -76,6 +76,18 @@ body {
 
 .about .big-files-logo img{
     width: 80%;
+}
+
+.about .info {
+    text-align: center;
+}
+
+.about .info span {
+    font-size: var(--font-sz-subtitle);  
+}
+
+.about  .info a {
+    color: var(--brand-2-clr);
 }
 
 /* just for seeing */
@@ -330,18 +342,5 @@ aside .btns button:hover {
 }
 
 
-aside .info {
-    color: var(--txt-clr);
-    padding: 0 1rem;
-    font-size: 1.1em;
-    
-    display: grid;
-    grid-auto-rows: 60px;
-}
-
-.info span {
-    font-size: 1.2em;
-    font-weight: 600;
-}
 
 
