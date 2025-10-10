@@ -39,7 +39,9 @@
     --brand-2-clr: #EA6365;
     --white-clr: #ffffff;
     --main-content-clr: #F2F4F8;
+    --placeholder-clr: #a3b2c7;
     --err-clr: #B80000;
+    
 
     box-sizing: border-box;
 }

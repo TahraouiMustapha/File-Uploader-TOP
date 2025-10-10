@@ -92,13 +92,13 @@ body {
 
 /* main-content style */
 .main-content {
+    --border-radius-val: 24px;
     background-color: var(--main-content-clr);
     margin-right: 32px;
     padding: 1rem;
 
-    border-radius: 32px;
-    overflow: hidden;
-
+    border-radius: var(--border-radius-val);
+    overflow-x: hidden;
     display: grid;
     grid-template-rows: 5% 25% 1fr;
     gap: 32px;
@@ -108,11 +108,73 @@ body {
     color: var(--brand-2-clr);
 }
 
+.message-no-files {
+    display: flex;
+    justify-content: center;
+    padding-top: 32px;
+}
+
+.files-container {
+    background-color: var(--white-clr);
+    border-radius: var(--border-radius-val);
+}
+
+.ul-files-folders {
+    padding: 2rem ;
+    list-style: none;
+
+    display: grid;
+    grid-auto-rows: 70px;
+    row-gap: 8px;
+}
+
+.ul-files-folders .file {
+    height: 100%;
+    padding: 0 1rem ;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    border-radius: var(--border-radius-val);
+    transition: background-color 0.2s ease;
+}
+
+.ul-files-folders .file:hover {
+    background-color: var(--main-content-clr);
+}
+
+
+.file .file-content {
+    display: grid;
+    grid-template-columns: 55px 1fr;
+    grid-template-rows: repeat(2, 1fr);
+    column-gap: 8px;
+}
+
+.file-content .icon {
+    grid-row: 1 / span 2;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.file-content .name {
+    font-size: var(--font-sz-btn);
+    font-weight: 600;
+}
+
+.file-content .date {
+    font-size: var(--font-sz-subtitle);
+    color: var(--placeholder-clr);
+    font-weight: 600;
+}
+
 
 
 /* just for seeing */
-.main-content > * {
-    border: 1px solid black;
+.ul-files-folders > * , 
+.ul-files-folders .file > *{
 }
 
 

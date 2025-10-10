@@ -18,7 +18,7 @@ const mainPage = asyncHandler (async (req, res)=> {
     files = files.map(file => (
         {
             ...file, 
-            createdDate: format(file.createdDate, 'PPP'),
+            createdDate: format(file.createdDate, 'h:m aa PPP'),
             size: file.size ? getSize(file.size) : null
         }
     ))
@@ -80,7 +80,7 @@ const appearFolderContent = asyncHandler(async (req, res)=> {
         foldersAndFiles = foldersAndFiles.map(file => (
             {
                 ...file, 
-                createdDate: format(file.createdDate, 'PPP'),
+                createdDate: format(file.createdDate, 'h:m aa PPP'),
                 size: file.size ? getSize(file.size) : null
             }
         ))                          
