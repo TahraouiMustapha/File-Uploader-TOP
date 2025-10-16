@@ -55,7 +55,35 @@
                 </div>
 
                 <%if(!locals.rootFolder){ %>
-                    <div class="available-storage">storage</div>
+                    <div class="storage">
+                        <div class="circular">
+                            <div class="outer">
+                                <div class="inner">
+                                    <div class="number">
+                                        <p>75%</p>
+                                        Space used
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- under circle to color the gap  -->
+                            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="160px" height="160px">
+                                    <circle cx="80" cy="80" r="70" stroke-linecap="round" class="gap-circle"/>
+                            </svg>
+
+                            <!-- circle for available storage -->
+                            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="160px" height="160px">
+                                    <circle cx="80" cy="80" r="70" stroke-linecap="round"  class="main-circle"/>
+                            </svg>
+
+
+                        </div>
+                        
+                        <div class="available-storage">
+                            <h3>Available storage</h3>
+                            <p>2GB/15GB</p>
+                        </div>
+                    </div>
                 <%}%>
                 <%if(userFiles) {%>
                        <div class="files-container">

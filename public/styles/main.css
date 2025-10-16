@@ -100,7 +100,7 @@ body {
     border-radius: var(--border-radius-val);
     overflow-x: hidden;
     display: grid;
-    grid-template-rows: 5% 25% 1fr;
+    grid-template-rows: 5% 30% 1fr;
     gap: 32px;
 }
 
@@ -170,13 +170,93 @@ body {
     font-weight: 600;
 }
 
+/* available storage */
 
+.storage {
+    width: 550px;
+    display: flex;
 
-/* just for seeing */
-.ul-files-folders > * , 
-.ul-files-folders .file > *{
+    background-color: var(--brand-clr);
+    box-shadow: var(--box-shdw);
+    border-radius: 24px;
 }
 
+.storage > * {
+    flex: 1;
+}
+
+.circular {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+}
+
+.outer {
+    height: 160px;
+    width: 160px;
+    border-radius: 50%;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;  
+}
+
+.inner {
+    height: 120px;
+    width: 120px;
+    border-radius: 50%;
+
+    box-shadow: inset 4px 4px 6px -1px rgba(0, 0, 0, 0.2);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--white-clr);
+
+    font-size: 1em;
+    font-weight: 600;
+}
+
+.inner .number {
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+}
+
+.storage svg {
+    position: absolute;
+    transform: rotate(125deg);
+}
+
+.main-circle , 
+.gap-circle {
+    fill: none;
+    stroke: var(--white-clr);
+    stroke-width: 20px;
+    /* 100% => 503 */
+    stroke-dasharray: 503;
+    /* for the empty in the bottom */
+    stroke-dashoffset: 150;
+}
+
+.main-circle {
+    /* ((353 * percent?) / 100) + 150 */
+    stroke-dasharray: 414.75;
+}
+
+.gap-circle {
+    stroke: rgba(255, 255,255, 0.2);
+}
+
+.available-storage {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    color: var(--white-clr);
+}
 
 /* dialogs style */
 
