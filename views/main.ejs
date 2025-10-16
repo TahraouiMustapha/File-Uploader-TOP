@@ -99,68 +99,22 @@
                        </div>
                    <%}%>
             </div>
+
+            <!-- new folder form -->
+            <%-include('partials/newFolderForm')%>
+
+            <!-- uplaod file form -->
+            <%-include('partials/uploadFileForm')%>
+             <%if(messages.dialog == 'upload'){ %>
+                <script>
+                    const newFileDialog = document.querySelector('#newFileDialog');
+                    newFileDialog.showModal()
+                </script>
+            <%}%>
         </section>
 
         
 
-        <!-- <section class="main">
-            <div class="left-side">
-                <div class="btns-container">
-                    <div id="newFolderBtn" class="btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>folder-plus-outline</title><path d="M13 19C13 19.34 13.04 19.67 13.09 20H4C2.9 20 2 19.11 2 18V6C2 4.89 2.89 4 4 4H10L12 6H20C21.1 6 22 6.89 22 8V13.81C21.39 13.46 20.72 13.22 20 13.09V8H4V18H13.09C13.04 18.33 13 18.66 13 19M20 18V15H18V18H15V20H18V23H20V20H23V18H20Z" /></svg>
-                        New Folder
-                    </div>
-                    <div id="newFileBtn" class="btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>file-plus-outline</title><path d="M13.81 22H6C4.89 22 4 21.11 4 20V4C4 2.9 4.89 2 6 2H14L20 8V13.09C19.67 13.04 19.34 13 19 13S18.33 13.04 18 13.09V9H13V4H6V20H13.09C13.21 20.72 13.46 21.39 13.81 22M23 18H20V15H18V18H15V20H18V23H20V20H23V18Z" /></svg>
-                        New File
-                    </div>
-                    <%if(locals.rootFolder){%>
-                        <div id="shareFolderBtn" class="btn">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>share-variant-outline</title><path d="M18 16.08C17.24 16.08 16.56 16.38 16.04 16.85L8.91 12.7C8.96 12.47 9 12.24 9 12S8.96 11.53 8.91 11.3L15.96 7.19C16.5 7.69 17.21 8 18 8C19.66 8 21 6.66 21 5S19.66 2 18 2 15 3.34 15 5C15 5.24 15.04 5.47 15.09 5.7L8.04 9.81C7.5 9.31 6.79 9 6 9C4.34 9 3 10.34 3 12S4.34 15 6 15C6.79 15 7.5 14.69 8.04 14.19L15.16 18.34C15.11 18.55 15.08 18.77 15.08 19C15.08 20.61 16.39 21.91 18 21.91S20.92 20.61 20.92 19C20.92 17.39 19.61 16.08 18 16.08M18 4C18.55 4 19 4.45 19 5S18.55 6 18 6 17 5.55 17 5 17.45 4 18 4M6 13C5.45 13 5 12.55 5 12S5.45 11 6 11 7 11.45 7 12 6.55 13 6 13M18 20C17.45 20 17 19.55 17 19S17.45 18 18 18 19 18.45 19 19 18.55 20 18 20Z" /></svg>
-                            Share
-                        </div>
-                        <div id="deleteFolderBtn" class="btn">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>trash-can-outline</title><path d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z" /></svg>
-                            Delete Folder
-                        </div>
-                    <%}%>
-                </div> 
-            </div>
-
-            <div class="main-content">
-                <div class="navigation-state">
-                    <%if(locals.path) {%>
-                        <p>
-                            <a href="/"><%=user.username%></a> 
-                            <%path.forEach(pathObj => {%>
-                                <%='>'%> <a href=<%=pathObj.folderHref%>> <%=pathObj.folderName%></a>
-                            <%})%>
-                        </p>
-                    <%} else {%>
-                            <p><a href="/"><%=user.username%></a></p>
-                    <%}%>                            
-                </div>
-                <div class="content">
-                    <div class="titles">
-                        <div>Name</div>
-                        <div>Size</div>
-                        <div>Created</div>
-                    </div>
-                        <%if(userFiles) {%>
-                            <div class="files-container">
-                                <%-//include('partials/folderContent')%>
-                            </div>
-                        <%} else {%>
-                            <div class="message-no-files">
-                                <%if(locals.rootFolder) { %>
-                                    <p>no files or folders to display</p>
-                                <%} else { %>
-                                    <p>Create a new folder to get started</p>
-                                <%}%>
-                            </div>
-                        <%}%>
-                </div>
-            </div> -->
 
     
             <!-- aside to appear file info -->
@@ -198,17 +152,8 @@
                     side.style.transform = 'scaleX(1)'
                 </script>
             <%}%>
+        
             
-            <!-- uplaod file form -->
-            <%-include('partials/uploadFileForm')%>
-             <%if(messages.dialog == 'upload'){ %>
-                <script>
-                    const newFileDialog = document.querySelector('#newFileDialog');
-                    newFileDialog.showModal()
-                </script>
-            <%}%>
-            <!-- new folder form -->
-            <%-include('partials/newFolderForm')%>
             <%if(locals.rootFolder) {%>
                 <!-- delete folder dilaog -->
                 <%-include('partials/deleteFolder', { folderid: rootFolder.folderid })%>

@@ -17,6 +17,8 @@ body {
     display: grid;
     
     grid-template-columns: 20% 1fr;
+    /* for dialog forms */
+    position: relative;
 }
 
 /* left side style */
@@ -100,7 +102,7 @@ body {
     border-radius: var(--border-radius-val);
     overflow-x: hidden;
     display: grid;
-    grid-template-rows: 5% 30% 1fr;
+    grid-template-rows: 5% 25% 1fr;
     gap: 32px;
 }
 
@@ -261,16 +263,24 @@ body {
 /* dialogs style */
 
 .main dialog[open] {
-    width: 500px;
+    --box-shdw: 0px 10px 25px -5px rgb(0 0 0 / 0.2);
+    --border-radius-val: 24px;
+    width: 400px;
     min-height: 280px;
     position: absolute;
     margin: 0;
-    top: 50vh;
+    top: 40vh;
     left: 50vw;
     transform: translate(-50%, -50%);
+
     border: none;
-    background-color: hsl(240 5.1% 15%);
-    color: white;
+    border-radius: var(--border-radius-val);
+    background-color: var(--white-clr);
+    color: #000;
+}
+
+.main dialog[open]::backdrop {
+    opacity: 0.5;
 }
 
 dialog a {
@@ -298,35 +308,70 @@ dialog form p {
     font-size: 1.3em;
 }
 
-p input {
+p input, 
+.input-file label {
     margin-top: 12px;
-    height: 40px;
+    height: 56px;
     border: 1px solid var(--border-clr);
-    border-radius: 4px;
+    border-radius: var(--border-radius-val);
     outline: none;
-    padding: 8px;
+    padding: 8px 14px;
 
-    font-size: 1em;
-    background-color: rgba(31, 31, 31, 0.308);
-    color: white;
+    font-size: 0.9em;
+    background-color: var(--white-clr);
+    color: #000;
+    box-shadow: var(--box-shdw);
 }
 
 input:focus {
-    border: 1px solid var(--second-clr);
-    box-shadow: 0 0 10px var(--second-clr);
+    box-shadow: var(--box-shdw);
+}
+
+/* for file input */
+.input-file {
+    position: relative;
+    cursor: pointer;
+}
+
+.input-file label {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+    overflow: hidden;
+}
+
+.input-file label::after {
+    content: 'Browse';
+    position: absolute;
+    height: 100%;
+    width: 72px;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8em;
+    background-color: #ccc;
+}
+
+.input-file input {
+    opacity: 0;
 }
 
 .dialog-submit-btn , 
 #copyLink{
-    align-self: flex-end;
-    padding: 12px 24px;
+    padding: 16px;
+    border-radius: var(--border-radius-val);
     border: none;
-    border-radius: 8px;
-    background-color: #40a9fffb;
-    color: var(--main-clr);
+    outline: none;
+    background-color: var(--brand-clr);
+    color: var(--white-clr);
     font-size: 1em;
+    font-weight: 600;
+    box-shadow: var(--box-shdw);
     cursor: pointer;
-    transition: filter 0.2s ease;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 
@@ -338,25 +383,26 @@ input:focus {
 
 .dialog-submit-btn:hover , 
 #copyLink:hover {
-    filter: brightness(80%);
-    color: var(--main-clr);
+    box-shadow: none;
+    transform: scale(102%);
 }
 
 dialog div > button , 
 .head .closeSide {
+    --size-val: 32px;
     border: none;
     outline: none;
-    background-color: hsl(240 5.1% 15%);     
-    color: var(--txt-clr);
-    font-size: 1.2em;
-    font-weight: 500;
-    cursor: pointer;
+    height: var(--size-val);
+    width: var(--size-val);
+    border-radius: 50%;
+    cursor: pointer; 
 }
 
-dialog div > button:hover , 
-.head .closeSide:hover {
-    color: var(--second-clr);
+dialog div > button img, 
+.head .closeSide img {
+    width: 80%;
 }
+
 
 input[type = 'file'] {
     border: none;

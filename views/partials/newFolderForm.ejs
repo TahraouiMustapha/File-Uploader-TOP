@@ -2,7 +2,9 @@
     <form action=<%=locals.newFolderHref || '/folders/new-folder'%> method="post">
         <div>
             <h2 class="title">New Folder</h2>
-            <button type="button" id="exitNewFolderBtn">X</button>
+            <button type="button" id="exitNewFolderBtn">
+                <img src="/assets/icons/close.svg" alt="close">
+            </button>
         </div>
         <p>
             <label for="folderName">Name</label>
