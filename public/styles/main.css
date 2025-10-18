@@ -403,6 +403,65 @@ dialog div > button img,
     width: 80%;
 }
 
+/* for file operations dialog */
+dialog#file-operations {
+    height: 300px;
+    width: 300px;
+    top: 55vh;
+}
+
+dialog#file-operations > div {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 1em ;
+}
+
+dialog#file-operations .operations {
+    flex: 1;
+    padding:8px;
+}
+
+.operations ul {
+    list-style: none;
+    display :grid;
+    grid-auto-rows: 1fr;
+    height: 100%;
+}
+
+.operations ul li {
+    display: flex;
+}
+
+.operations ul li + li {
+    border-top: 1px solid #ddd;
+}
+
+.operations ul li button, 
+.operations ul li a {
+    flex: 1;
+    font-size: var(--font-sz-btn);
+    background-color: var(--white-clr);
+
+    display: flex;
+    align-items: center;
+    gap: 8px ;
+    cursor: pointer;
+
+    transition: background-color 0.2s ease;
+} 
+
+.operations ul li button {
+    border: none;
+    outline: none;
+}
+
+.operations li:hover button,  
+.operations li:hover a  {
+    background-color: var(--main-content-clr);
+}
+
 
 input[type = 'file'] {
     border: none;
