@@ -17,27 +17,30 @@
 <ul class="ul-files-folders">
     <%userFiles.forEach(file => {%>
         <%if( file.fileid ){%>
-                <!-- files -->
-                <li>
-                    <a class="file" 
-                    href=<%= locals.isShared? `${sharedLink}/folder/${file.folderid}?selectedFileId=${file.fileid}` :`/files/${file.fileid}` %>>
-                        <div class="file-content">
-                            <%if(file.mimetype.includes('image')) {%>
-                                <div class="icon" 
-                                    style=<%=`background-color:${fileIconStyle['image'].backgroundColor};`%>>
-                                    <img src=<%=fileIconStyle['image'].srcIcon%> alt="icon">
+
+                    <li>
+                        <a class="file"
+                            href="<%= locals.isShared 
+                            ? sharedLink + '/folder/' + file.folderid + '?selectedFileId=' + file.fileid 
+                            : '/files/' + file.fileid %>">
+                            
+                            <div class="file-content">
+                            <% if (file.mimetype.includes('image')) { %>
+                                <div class="icon"
+                                style="background-color: <%= fileIconStyle['image'].backgroundColor %>;">
+                                <img src="<%= fileIconStyle['image'].srcIcon %>" alt="icon">
                                 </div>
-                            <%} else if(file.mimetype.includes('video') || file.mimetype.includes('audio')) {%>
-                                <div class="icon" 
-                                    style=<%=`background-color:${fileIconStyle['video/audio'].backgroundColor};`%>>
-                                    <img src=<%=fileIconStyle['video/audio'].srcIcon%> alt="icon">
+                            <% } else if (file.mimetype.includes('video') || file.mimetype.includes('audio')) { %>
+                                <div class="icon"
+                                style="background-color: <%= fileIconStyle['video/audio'].backgroundColor %>;">
+                                <img src="<%= fileIconStyle['video/audio'].srcIcon %>" alt="icon">
                                 </div>
-                            <%} else {%>    
-                                <div class="icon" 
-                                    style=<%=`background-color:${fileIconStyle['otherFiles'].backgroundColor};`%>>
-                                    <img src=<%=fileIconStyle['otherFiles'].srcIcon%> alt="icon">
+                            <% } else { %>
+                                <div class="icon"
+                                style="background-color: <%= fileIconStyle['otherFiles'].backgroundColor %>;">
+                                <img src="<%= fileIconStyle['otherFiles'].srcIcon %>" alt="icon">
                                 </div>
-                            <%}%>
+                            <% } %>
 
                             <div class="name">
                                 <%=file.name%>
@@ -46,31 +49,39 @@
                                 <%=file.createdDate%>
                             </div>
                         </div>
-                        <div class="dots">dots</div>
+
+                        <div class="dots">
+                            <img src="/assets/icons/dots.svg" alt="file operaions">
+                        </div>
                     </a>
                 </li>
             <%} else { %>
-                <!-- folders -->
                 <li>
-                    <a class="file" 
-                    href=<%= locals.isShared ? `${sharedLink}/folder/${file.folderid}` : `/folders/${file.folderid}` %>>
-                        <div class="file-content">
-                            <div class="icon" 
-                                style=<%=`background-color:${folderIconStyle.backgroundColor};`%>">
-                                <img src=<%=folderIconStyle.srcIcon%> alt="icon">
-                            </div>
-                            <div class="name">
-                                <%=file.name%>
-                            </div>
-                            <div class="date">
-                                <%=file.createdDate%>
-                            </div>
+                    <a 
+                        class="file" 
+                        href="<%= locals.isShared ? `${sharedLink}/folder/${file.folderid}` : `/folders/${file.folderid}` %>"
+                    >
+                    <div class="file-content">
+                        <div 
+                            class="icon" 
+                            style="<%= `background-color:${folderIconStyle.backgroundColor};` %>">
+                            <img src="<%= folderIconStyle.srcIcon %>" alt="icon">
                         </div>
-                        
-                        <div class="dots">dots</div>
+
+                        <div class="name">
+                            <%= file.name %>
+                        </div>
+
+                        <div class="date">
+                            <%= file.createdDate %>
+                        </div>
+                    </div>
+
                     </a>
                 </li>
+
         <%}%>                                    
     <%})%>                            
 </ul>
+
                     

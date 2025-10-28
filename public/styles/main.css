@@ -17,6 +17,7 @@ body {
     display: grid;
     
     grid-template-columns: 20% 1fr;
+    overflow-y: hidden;
     /* for dialog forms */
     position: relative;
 }
@@ -404,7 +405,8 @@ dialog div > button img,
 }
 
 /* for file operations dialog */
-dialog#file-operations {
+dialog#file-operations , 
+dialog#file-details {
     height: 300px;
     width: 300px;
     top: 55vh;
@@ -416,6 +418,21 @@ dialog#file-operations > div {
     display: flex;
     flex-direction: column;
     padding: 1em ;
+}
+
+dialog#file-operations .file-name {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 4px;
+}
+
+.file-name button {
+    outline: none;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    border-radius: 50%;
 }
 
 dialog#file-operations .operations {
@@ -473,6 +490,64 @@ dialog .btns {
     display: flex;
     justify-content: space-around;
 }
+
+/* style file details dialog */
+dialog#file-details > div {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 16px;
+}
+
+dialog#file-details .head {
+    width: 70%;
+    align-self: flex-end;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 4px;
+}
+
+dialog#file-details .head p {
+    font-size: 1.4em;
+    font-weight: 600;
+}
+
+dialog#file-details .details {
+    display: flex;
+    flex-direction: column;
+    gap: 12px; 
+}
+
+dialog#file-details .name-container {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    font-size: 14px;
+}
+
+dialog#file-details .name-container .date {
+    color: #A3B2C7;
+}
+
+dialog#file-details .inner-details ul {
+    list-style-type: none;
+    display: grid;
+    row-gap: 12px;
+}
+
+dialog#file-details .inner-details ul  li {
+    display: grid;
+    grid-template-columns: 45% 1fr;
+    align-items: center;
+}
+
+dialog#file-details .inner-details ul  li p {
+    color: #333F4E;
+    font-size: var(--font-sz-subtitle);
+}
+
 
 #cancelDelete, 
 #cancelSharing, 

@@ -88,6 +88,7 @@ ul.errors {
     color: var(--white-clr);
     border-radius: 8px;
     position: absolute;
+    z-index: 1;
     transform: translate(-25%, 20%);
 
     opacity: 0;
