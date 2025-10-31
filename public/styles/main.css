@@ -103,7 +103,7 @@ body {
     border-radius: var(--border-radius-val);
     overflow-x: hidden;
     display: grid;
-    grid-template-rows: 5% 25% 1fr;
+    grid-template-rows: 5% minmax(25%, auto) 1fr;
     gap: 32px;
 }
 
@@ -328,10 +328,6 @@ p input,
     box-shadow: var(--box-shdw);
 }
 
-.input-file label {
-    margin-top: 12px;
-}
-
 input:focus {
     box-shadow: var(--box-shdw);
 }
@@ -369,7 +365,7 @@ input:focus {
 }
 
 .dialog-submit-btn , 
-#copyLink{
+#copyLink {
     padding: 12px;
     border-radius: var(--border-radius-val);
     border: none;
@@ -557,12 +553,16 @@ dialog#file-details .inner-details ul  li p {
     font-size: var(--font-sz-subtitle);
 }
 
+#deleteDialog form > p {
+    font-size: 1.2em;
+    margin-bottom: 16px;
+}
 
 #cancelDelete, 
 #cancelSharing, 
 #cancelShareFileBtn {
     padding: 12px 24px;
-    border-radius: 8px;
+    border-radius: var(--border-radius-val);
     background-color: #2c2c2c8f;
     border: var(--border-clr) 0.5px solid;
     color: var(--white-clr, #fff);
@@ -571,10 +571,9 @@ dialog#file-details .inner-details ul  li p {
 }
 
 #cancelDelete {
-    margin-top: 32px;
+    width: auto;
+    height: auto;
 }
-
-
 
 /* style for share dialog */
 
@@ -632,7 +631,8 @@ dialog#file-details .inner-details ul  li p {
     color: var(--txt-clr);
 }
 
-#shareFileDialog .btns button {
+#shareFileDialog .btns button , 
+#shareFolderDialog .btns button {
     width: fit-content;
     display: flex;
     justify-content: center;

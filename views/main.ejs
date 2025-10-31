@@ -25,6 +25,17 @@
                         Upload File
                     </div>
 
+                    <%if(locals.rootFolder){%>
+                        <div id="shareFolderBtn" class="btn">
+                            <img src="/assets/icons/share-folder.png" alt="share-folder">
+                            Share
+                        </div>
+                        <div id="deleteFolderBtn" class="btn">
+                            <img src="/assets/icons/trash.svg" alt="delete">
+                            Delete
+                        </div>
+                    <%}%>
+
                 </div>
                 
                 <div class="about">
