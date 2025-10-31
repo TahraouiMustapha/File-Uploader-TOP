@@ -2,22 +2,24 @@
     <form action=<%=`/folders/share/${folderid}`%> method="post">
         <div>
             <h2 class="title">Share Folder</h2>
-            <button type="button" id="exitShareDialogBtn">X</button>
+            <button type="button" id="exitShareDialogBtn">
+                <img src="/assets/icons/close.svg " alt="close">
+            </button>
         </div>
         <p>
             Generate a public link to share the current folder and its contents
         </p>
 
-        <p>
+        <div class="duration-section">
             <p class="duration-title">Duration</p>
-            <p class="select-duration">
+            <div class="select-duration">
                 <label class="custom-radio">
                     <input type="radio" name="duration" value="1" required>
                     1 hour
                 </label>
                 <label class="custom-radio">
                     <input type="radio" name="duration" value="4" required>
-                    4 hour
+                    4 hours
                 </label>
                 <label class="custom-radio">
                     <input type="radio" name="duration" value="24" required>
@@ -31,9 +33,9 @@
                     <input type="radio" name="duration" value="168" required>
                     1 week
                 </label>
-            </p>
+            </div>
             <p class="duration-note">Links will expire after the specified duration</p>
-        </p>
+        </div>
 
         <!-- style for duration -->
         <script>
