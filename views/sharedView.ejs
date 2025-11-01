@@ -21,11 +21,6 @@
                     <%}%> 
                 </div>
                 <div class="content">
-                        <div class="titles">
-                            <div>Name</div>
-                            <div>Size</div>
-                            <div>Created</div>
-                        </div>
                             <%if(locals.userFiles) {%>
                                 <div class="files-container">
                                     <%-include('partials/folderContent')%>
@@ -38,52 +33,90 @@
                 </div>
             </div>
 
-            <!-- aside to appear file info -->
+            <!-- file operations dialog -->
              <%if(locals.clickedFile) {%>
-                <aside class="side" id="sideOfFileInfo">
-                    <div class="head">
-                        <h2>File Information</h2>
-                        <button class="closeSide">X</button>
+                <dialog id="file-operations">
+
+                        <div>
+                            <h3 class="file-name">
+                                <p><%=clickedFile.name%></p>
+                                <button id="closeFileOptions">
+                                    <img src="/assets/icons/close.svg" alt="close">
+                                </button>
+                            </h3>
+                            <div class="operations">
+                                <ul>
+                                    <li>
+                                        <button id="file-option-details">
+                                            <img src="/assets/icons/info.svg" alt="details" class="icon">
+                                            <p class="operation">Details</p>
+                                        </button>
+                                    </li>
+
+                                    <li>
+                                        <a href="/files/download/<%=clickedFile.fileid%>">
+                                            <img src="/assets/icons/download.svg" alt="download" class="icon">
+                                            <p class="operation">Download</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                </dialog>
+
+                <dialog id="file-details">
+                    <div>
+                        <div class="head">
+                            <p>Details</p>
+                            <button id="closeFileDetails">
+                                <img src="/assets/icons/close.svg" alt="close">
+                            </button>
+                        </div>
+                        <div class="details">
+                            <div class="name-container">
+                                <p class="name"><%=clickedFile.name%></p>
+                                <p class="date"><%=clickedFile.createdDate%></p>
+                            </div>
+                            <div class="inner-details">
+                                <ul>
+                                    <li>
+                                        <p>Uplaoded date:</p>
+                                        <span><%=clickedFile.name%></span>
+                                    </li>
+                                    <li>
+                                        <p>Type:</p>
+                                        <span><%=clickedFile.mimetype%></span>
+                                    </li>
+                                    <li>
+                                        <p>Size:</p>
+                                        <span><%=clickedFile.size%></span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                    <div class="info">
-                        <p>
-                            <span>Name</span> : <%=clickedFile.name%>
-                        </p>
-                        <p>
-                            <span>Type</span> : <%=clickedFile.mimetype%>
-                        </p>
-                        <p>
-                            <span>Size</span> : <%=clickedFile.size%>
-                        </p>
-                        <p>
-                            <span>Created</span> : <%=clickedFile.createdDate%> 
-                        </p>
-                    
-                    </div>
-                    <div class="btns">
-                        <button class="closeSide">close</button>
-                        <a href="/files/download/<%=clickedFile.fileid%>" id="downloadBtn">download</a>
-                    </div>
-                </aside>
+                </dialog>
 
                 <script>
-                    const side = document.querySelector('#sideOfFileInfo') 
-                    side.style.transform = 'scaleX(1)'
+                    const fileOperations = document.querySelector('#file-operations');
+                    const closeFileOptions = document.querySelector('#closeFileOptions');
+
+                    fileOperations.showModal()
+                    closeFileOptions.addEventListener('click', ()=> fileOperations.close())
+
+                    const fileOptionsDetailsBtn = document.querySelector('#file-option-details');
+                     const fileDetailsDialog = document.querySelector('#file-details')
+                     fileOptionsDetailsBtn.addEventListener('click', ()=> {
+                         fileOperations.close()
+                         fileDetailsDialog.showModal()
+                     })
+
+                     const closeFileDetails = document.querySelector('#closeFileDetails');
+                     closeFileDetails.addEventListener('click', ()=> {
+                         fileDetailsDialog.close();
+                     })
                 </script>
             <%}%>
         </section>
     </body>
-
-    <script>
-        const closeSideBtn = Array.from(document.querySelectorAll('.closeSide'))
-
-        // close the side 
-        if(closeSideBtn.length > 0) {
-            closeSideBtn.forEach(btn => {
-                btn.addEventListener('click', ()=> {
-                    side.style.transform = 'scaleX(0)'
-                })
-            })
-        }
-    </script>
 </html>

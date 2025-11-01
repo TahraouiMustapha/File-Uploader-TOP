@@ -431,6 +431,13 @@ dialog#file-operations .file-name {
     padding: 0 4px;
 }
 
+.file-name p {
+    width: 80%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
 .file-name button {
     outline: none;
     border: none;
@@ -447,7 +454,7 @@ dialog#file-operations .operations {
 .operations ul {
     list-style: none;
     display :grid;
-    grid-auto-rows: 1fr;
+    grid-auto-rows: minmax(auto , 30%);
     height: 100%;
 }
 
