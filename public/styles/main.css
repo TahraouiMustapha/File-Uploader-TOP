@@ -182,6 +182,7 @@ body {
     background-color: var(--brand-clr);
     box-shadow: var(--box-shdw);
     border-radius: 24px;
+
 }
 
 .storage > * {
@@ -229,24 +230,18 @@ body {
 }
 
 .storage svg {
+    fill: none ;
     position: absolute;
-    transform: rotate(125deg);
-}
+    stroke-width: 20px ;
+    stroke-dasharray: 440;
 
-.main-circle , 
-.gap-circle {
-    fill: none;
-    stroke: var(--white-clr);
-    stroke-width: 20px;
-    /* 100% => 503 */
-    stroke-dasharray: 503;
-    /* for the empty in the bottom */
-    stroke-dashoffset: 150;
+    transform: rotate(90deg);
 }
 
 .main-circle {
-    /* ((353 * percent?) / 100) + 150 */
-    stroke-dasharray: 414.75;
+    stroke: var(--white-clr);
+    /* percentage here */
+    stroke-dashoffset: calc(440 - (440 * var(--percent, 0.02)));
 }
 
 .gap-circle {
