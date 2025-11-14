@@ -1,6 +1,7 @@
 const supabase = require('../supabase/supabase');
 const { randomUUID } = require('crypto');
-const { decode } = require('base64-arraybuffer')
+const { decode } = require('base64-arraybuffer');
+
 
 
 class FileService {
@@ -95,6 +96,22 @@ class FileService {
             throw err
         }
 
+    }
+
+    static async getListedFiles(userId) {
+        const { data, error } = await supabase.storage
+            .from('files')
+            .list(`${userId}/`, {
+                limit   : 1000,
+                offset : 0,
+            });
+
+            if (error) {
+                console.error('Error listing files:', error)
+                return null ;
+            }
+
+            return data;
     }
 }
 

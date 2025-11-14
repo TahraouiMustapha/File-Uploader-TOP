@@ -66,12 +66,12 @@
                 </div>
 
                 <%if(!locals.rootFolder){ %>
-                    <div class="storage">
+                    <div class="storage" style="--percent:<%=locals.percent%>; ">
                         <div class="circular">
                             <div class="outer">
                                 <div class="inner">
                                     <div class="number">
-                                        <p>75%</p>
+                                        <p><%=locals.spaceUsed%>%</p>
                                         Space used
                                     </div>
                                 </div>
@@ -92,7 +92,7 @@
                         
                         <div class="available-storage">
                             <h3>Available storage</h3>
-                            <p>2GB/15GB</p>
+                            <p><%=locals.spaceUsedInGb%>GB/10GB</p>
                         </div>
                     </div>
                 <%}%>

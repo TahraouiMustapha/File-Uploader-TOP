@@ -241,7 +241,7 @@ body {
 .main-circle {
     stroke: var(--white-clr);
     /* percentage here */
-    stroke-dashoffset: calc(440 - (440 * var(--percent, 0.02)));
+    stroke-dashoffset: calc(440 - (440 * var(--percent, 0.01)));
 }
 
 .gap-circle {

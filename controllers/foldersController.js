@@ -2,10 +2,12 @@ const db = require("../db/queries")
 const asyncHandler = require('express-async-handler')
 const { compareAsc, format, add } = require("date-fns");
 
-const { getPath, getSize } = require('../services/foldersServices') 
+const { getPath, getSize, getUsedStorage, calculateSpaceUsed } = require('../services/foldersServices') 
 const FileService = require('../services/FileService');
 
 const { randomUUID } = require('crypto');
+
+
 
 
 const mainPage = asyncHandler (async (req, res)=> {
@@ -33,11 +35,25 @@ const mainPage = asyncHandler (async (req, res)=> {
         }
     }
 
+    const usedStorageObj = await getUsedStorage(user.userid)
+
+    // percent of storage used
+    const spaceUsed = calculateSpaceUsed(usedStorageObj);
+    const spaceUsedInGb = usedStorageObj.isInGb 
+                        ? usedStorageObj.value 
+                        : 0;
+                         
+
     res.render("main", {
         userFiles: files?.length == 0 ? null : files , 
         newFolderHref: '/folders/new-folder' , 
         newFileHref: '/files/new-file', 
-        clickedFile: fileObj
+        clickedFile: fileObj, 
+
+        spaceUsed: spaceUsed, 
+        spaceUsedInGb: spaceUsedInGb, 
+        // caculate the percent in format 0.x
+        percent: spaceUsed > 1 ? spaceUsed / 10 : 0.01
     })
 })
 
@@ -187,6 +203,7 @@ const generateShareLink = asyncHandler(async (req, res)=> {
 
     res.redirect(`/folders/${folderid}`)
 })
+
 
 
 module.exports = {
