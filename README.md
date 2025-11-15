@@ -5,6 +5,7 @@
 https://file-uploader-top-j0dj.onrender.com
 
 ![App Screenshot](./screenshots/Screenshot_login_page.png)
+![App Screenshot](./screenshots/Screenshot_general_about.png)
 
 ## Features
 
